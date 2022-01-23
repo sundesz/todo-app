@@ -12,6 +12,7 @@ import {
 } from './middleware';
 import { JwtPayload } from 'jsonwebtoken';
 import { ITaskAttribute } from './db/models';
+import testingRouter from './api/routers/testing';
 
 /**
  * Custom types for Express Request
@@ -40,6 +41,10 @@ app.get('/', (_req, res) => {
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/tasks', tokenExtractor, isValidUser, taskRouter);
 app.use('/api/v1/', loginRouter);
+
+if (process.env.NODE_ENV === 'test') {
+  app.use('/api/v1/testing', testingRouter);
+}
 
 app.use(unknownEndpoint);
 app.use(errorHandler);
