@@ -12,6 +12,8 @@ const api = supertest(app);
 
 beforeEach(async () => {
   await connectToDatabase();
+
+  // truncate table
   await Task.sync({ force: true });
   await User.sync({ force: true });
 

@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "tsc": "tsc",
-    "start": "node build/index.js",
-    "start:test": "NODE_ENV=production node index.js",
+    "start": "NODE_ENV=production node build/index.js",
+    "start:test": "NODE_ENV=test ts-node-dev src/index.ts",
     "start:postgres": "docker-compose down && docker-compose up -d --build",
     "dev": "NODE_ENV=development ts-node-dev src/index.ts",
     "dev:db": "npm run start:postgres && npm run dev",
