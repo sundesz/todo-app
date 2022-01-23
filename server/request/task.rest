@@ -1,0 +1,28 @@
+GET http://localhost:3001/api/v1/tasks?completed=false
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNhbmRlc2giLCJpZCI6IjRiMGU0ZmQzLWE2MTEtNDVlNS1iMmVjLTE2Yzg4MzVmNjc3NCIsImlhdCI6MTY0MjcxNjcyOCwiZXhwIjoxNjQyNzIzOTI4fQ.oFFEwOjoNpaW02mRpRDDD33WZ_eIOJe6ta3AlMyiwFQ
+
+###
+POST http://localhost:3001/api/v1/tasks
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1bmRlc3pAZ21haWwuY29tIiwiaWQiOiI3N2U4YjcxNC03Nzg3LTQ3OTgtYWFjYS1iOTY1NGFkMjVjZjQiLCJpYXQiOjE2NDI4NjIxMDcsImV4cCI6MTY0Mjg2OTMwN30.vzvx-hgFcUSyGmXYtBpCgRMNhVLV0zB73jdfTt0tcxo
+
+{
+  "content": "sandesh 1"
+}
+
+
+###
+PUT http://localhost:3001/api/v1/tasks/25fbca09-b263-4831-8b88-ce27e7947dca
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1bmRlc3pAZ21haWwuY29tIiwiaWQiOiI3N2U4YjcxNC03Nzg3LTQ3OTgtYWFjYS1iOTY1NGFkMjVjZjQiLCJpYXQiOjE2NDI4NjYyOTAsImV4cCI6MTY0Mjg3MzQ5MH0.MqOf06H1vDR9qXoaSjtlnWWxCD1PsIZrY8JaOOX_Ib8
+
+{
+  "isCompleted": "true"
+}
+
+
+###
+
+DELETE http://localhost:3001/api/v1/tasks/25fbca09-b263-4831-8b88-ce27e7947dca
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1bmRlc3pAZ21haWwuY29tIiwiaWQiOiI3N2U4YjcxNC03Nzg3LTQ3OTgtYWFjYS1iOTY1NGFkMjVjZjQiLCJpYXQiOjE2NDI3ODUwMzQsImV4cCI6MTY0Mjc5MjIzNH0.jkcRlALdXTOn3-tsR9lmOQfJGRIEmBG-TTWq1A3jBZI
