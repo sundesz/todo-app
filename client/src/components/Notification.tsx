@@ -18,6 +18,7 @@ const DismissibleAlert = (): JSX.Element => {
   if (show && notification.message.length) {
     return (
       <Alert
+        className="notification"
         variant={notification.type}
         onClose={alertCloseHandler}
         dismissible

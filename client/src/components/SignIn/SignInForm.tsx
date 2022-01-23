@@ -32,6 +32,7 @@ const SignInForm: React.FC<ISignInFormProps> = ({ onSubmit }) => {
         {() => (
           <FormikForm>
             <Field
+              id="username"
               label="Username (Email)"
               placeholder="Username"
               name="username"
@@ -39,6 +40,7 @@ const SignInForm: React.FC<ISignInFormProps> = ({ onSubmit }) => {
             />
 
             <Field
+              id="password"
               label="Password"
               placeholder="Password"
               name="password"
@@ -46,7 +48,7 @@ const SignInForm: React.FC<ISignInFormProps> = ({ onSubmit }) => {
               component={TextField}
             />
 
-            <SubmitButton name="Sign in" />
+            <SubmitButton id="signin-btn" name="Sign in" />
           </FormikForm>
         )}
       </Formik>

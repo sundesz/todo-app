@@ -11,24 +11,29 @@ const Navigation: React.FC = (): JSX.Element => {
   return (
     <>
       <Navbar bg="info" variant="dark" className="header-navbar">
-        <Navbar.Brand as={Link} to="/" className="font-weight-bold">
+        <Navbar.Brand
+          id="app-name"
+          as={Link}
+          to="/"
+          className="font-weight-bold"
+        >
           Todo App
         </Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
           {user.authentication ? (
             <>
-              <Nav.Link as={Link} to="/signout">
+              <Nav.Link id="signout-link" as={Link} to="/signout">
                 Sign out
               </Nav.Link>
               <Navbar.Text>Signed in as: {user.user}</Navbar.Text>
             </>
           ) : (
             <>
-              <Nav.Link as={Link} to="/signin">
+              <Nav.Link id="signin-link" as={Link} to="/signin">
                 Sign in
               </Nav.Link>
-              <Nav.Link as={Link} to="/signup">
+              <Nav.Link id="signup-link" as={Link} to="/signup">
                 Sign up
               </Nav.Link>
             </>

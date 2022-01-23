@@ -15,20 +15,32 @@ const TaskHeaderActions: React.FC<ITaskHeaderActions> = ({
     <div className="text-center task-actions">
       <ul>
         <li>
-          <span onClick={() => filterOnClick('all')}>
-            {filter === 'all' ? <b>All</b> : 'All'}
+          <span
+            id="all"
+            className={`${filter === 'all' ? 'font-weight-bold' : ''}`}
+            onClick={() => filterOnClick('all')}
+          >
+            All
           </span>
         </li>
         <li>|</li>
         <li>
-          <span onClick={() => filterOnClick('incomplete')}>
-            {filter === 'incomplete' ? <b>Incomplete</b> : 'Incomplete'}
+          <span
+            id="incomplete"
+            className={`${filter === 'incomplete' ? 'font-weight-bold' : ''}`}
+            onClick={() => filterOnClick('incomplete')}
+          >
+            Incomplete
           </span>
         </li>
         <li>|</li>
         <li>
-          <span onClick={() => filterOnClick('complete')}>
-            {filter === 'complete' ? <b>Complete</b> : 'Complete'}
+          <span
+            id="complete"
+            className={`${filter === 'complete' ? 'font-weight-bold' : ''}`}
+            onClick={() => filterOnClick('complete')}
+          >
+            Complete
           </span>
         </li>
       </ul>

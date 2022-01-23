@@ -35,6 +35,7 @@ const TaskForm: React.FC<TaskForm> = ({ onSubmit }) => {
             <Row className="justify-content-center">
               <Col sm={10} className="my-1">
                 <Field
+                  id="task"
                   name="task"
                   placeholder="Task description ..."
                   // ref={taskInputRef}
@@ -43,7 +44,9 @@ const TaskForm: React.FC<TaskForm> = ({ onSubmit }) => {
               </Col>
 
               <Col xs="auto" className="my-1">
-                <Button type="submit">Add task</Button>
+                <Button id="addtask-btn" type="submit">
+                  Add task
+                </Button>
               </Col>
             </Row>
           </Form>

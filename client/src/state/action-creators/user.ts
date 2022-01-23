@@ -63,6 +63,7 @@ export const signIn = (user: ISignInValues) => {
       dispatch(
         setNotification({ message: 'Sign in successfully', type: 'success' })
       );
+      // TODO: This is not working
       displayNotification({
         message: 'Sign in successfully',
         type: 'success',
@@ -83,6 +84,7 @@ export const signOut = () => {
       dispatch(
         setNotification({ message: 'Sign out successfully', type: 'success' })
       );
+      // TODO: This is not working
       displayNotification({
         message: 'Sign out successfully displayNotification',
         type: 'success',

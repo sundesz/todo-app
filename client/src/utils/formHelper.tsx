@@ -9,12 +9,14 @@ const GRID_LEFT = 4;
 const GRID_RIGHT = 8;
 
 interface TextProps extends FieldProps {
+  id?: string;
   label?: string;
   placeholder?: string;
   type?: string;
 }
 
 export const CustomTextField = ({
+  id,
   field,
   placeholder,
   type = 'text',
@@ -22,6 +24,7 @@ export const CustomTextField = ({
   return (
     <>
       <Field
+        id={id}
         className="form-control"
         placeholder={placeholder}
         type={type}
@@ -36,6 +39,7 @@ export const CustomTextField = ({
 };
 
 export const TextField = ({
+  id,
   field,
   type = 'text',
   placeholder,
@@ -48,6 +52,7 @@ export const TextField = ({
       </Form.Label>
       <Col sm={GRID_RIGHT}>
         <Field
+          id={id}
           className="form-control"
           placeholder={placeholder}
           type={type}
@@ -62,11 +67,19 @@ export const TextField = ({
   );
 };
 
-export const SubmitButton = ({ name }: { name: string }): JSX.Element => {
+export const SubmitButton = ({
+  id,
+  name,
+}: {
+  id?: string;
+  name: string;
+}): JSX.Element => {
   return (
     <div className="mb-3 row">
       <Col sm={{ span: GRID_RIGHT, offset: GRID_LEFT }}>
-        <Button type="submit">{name}</Button>
+        <Button id={id} type="submit">
+          {name}
+        </Button>
       </Col>
     </div>
   );

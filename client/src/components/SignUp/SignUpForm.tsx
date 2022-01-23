@@ -41,6 +41,7 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ onSubmit }) => {
       >
         <Form>
           <Field
+            id="name"
             label="Name"
             name="name"
             placeholder="Name"
@@ -48,6 +49,7 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ onSubmit }) => {
           />
 
           <Field
+            id="username"
             label="Username (Email)"
             name="username"
             placeholder="Username"
@@ -55,6 +57,7 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ onSubmit }) => {
           />
 
           <Field
+            id="password"
             label="Password"
             name="password"
             type="password"
@@ -63,6 +66,7 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ onSubmit }) => {
           />
 
           <Field
+            id="confirmPassword"
             label="Password confirmation"
             name="confirmPassword"
             type="password"
@@ -70,7 +74,7 @@ const SignUpForm: React.FC<ISignUpFormProps> = ({ onSubmit }) => {
             component={TextField}
           />
 
-          <SubmitButton name="Sign up" />
+          <SubmitButton id="signup-btn" name="Sign up" />
         </Form>
       </Formik>
     </div>

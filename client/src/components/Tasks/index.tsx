@@ -62,13 +62,15 @@ const Tasks = () => {
         />
       )}
 
-      {tasks.length === 0 && (
-        <div className="no-tasks">No Tasks. Please add tasks</div>
-      )}
+      <div className="task-lists">
+        {tasks.length === 0 && (
+          <div className="no-tasks">No Tasks. Please add tasks</div>
+        )}
 
-      {taskNode.map((task) => (
-        <Task key={task.taskId} task={task} />
-      ))}
+        {taskNode.map((task) => (
+          <Task key={task.taskId} task={task} />
+        ))}
+      </div>
 
       <br />
 
