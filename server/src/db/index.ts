@@ -1,14 +1,17 @@
 import { Sequelize } from 'sequelize';
-import { DATABASE_URL } from '../config';
-
+import { DB_HOST, DB_NAME, DB_PASSWORD, DB_USER } from '../config';
 // import Umzug from 'umzug';
+// import { DATABASE_URL } from '../config';
 
-export const sequelize = new Sequelize(
-  DATABASE_URL
-  // {dialectOptions: { ssl: { require: true, rejectUnauthorized: false } }}
-);
+// export const sequelize = new Sequelize(
+//   DATABASE_URL
+//   // {dialectOptions: { ssl: { require: true, rejectUnauthorized: false } }}
+// );
 
-// I cannot do this because of typescript
+export const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
+  host: DB_HOST,
+  dialect: 'postgres',
+});
 
 // const runMigrations = async () => {
 //   const migrator = new Umzug({

@@ -23,5 +23,7 @@ docker-compose up -d --build
 If you have any problem with docker-compose up you can also use your local postgres
 If you use local postgres please create the table first (todoapp) 
 
+check if port 5432 is used already or not
+
 
 I am little confuse Should i create new image for test or just use the same image with different table name. So for now I just use the existing table
