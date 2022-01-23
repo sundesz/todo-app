@@ -1,0 +1,81 @@
+.task-actions {
+  background-color: #add8e6;
+}
+.task-actions ul {
+  list-style: none;
+  padding: 10px;
+}
+
+.task-actions ul li {
+  padding: 0 5px;
+  display: inline-block;
+}
+
+.task-actions ul li span {
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.task-actions ul li span:hover {
+  font-weight: bold;
+}
+
+.font-weight-bold {
+  font-weight: bold;
+}
+
+.content-container {
+  padding: 50px 20px;
+}
+
+.footer-container {
+  padding: 20px;
+}
+.footer-container div {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.add-task-container {
+  background-color: #d2d2cd;
+  padding: 20px;
+}
+
+.delete-text {
+  text-decoration: line-through;
+}
+
+.no-tasks {
+  text-align: center;
+  font-weight: bold;
+  font-size: 40px;
+  padding: 40px;
+  color: #ff3600;
+}
+
+.task-label {
+  font-size: 24px;
+}
+
+.task-checkbox input:checked[type='checkbox'] {
+  border: transparent;
+}
+.task-checkbox input[type='checkbox'] {
+  width: 32px;
+  height: 32px;
+  border: 5px solid;
+  cursor: pointer;
+}
+
+.nav-link {
+  color: #000;
+}
+
+.navbar-dark .navbar-text {
+  color: #555;
+}
+
+.header-navbar {
+  padding-left: 20px;
+  padding-right: 20px;
+}
