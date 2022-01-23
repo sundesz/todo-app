@@ -38,7 +38,7 @@ const getAllTasks: RequestHandler = async (req, res) => {
     res.json(tasks);
   } catch (error: unknown) {
     if (error instanceof Error) {
-      res.status(401).json({ error: error.message });
+      res.status(400).json({ error: error.message });
     }
   }
 };
@@ -60,7 +60,7 @@ const createTask: RequestHandler = async (req, res) => {
     res.json(task);
   } catch (error: unknown) {
     if (error instanceof Error) {
-      res.status(401).json({ error: error.message });
+      res.status(400).json({ error: error.message });
     }
   }
 };
@@ -79,7 +79,7 @@ const updateTask: RequestHandler = async (req, res) => {
     res.json(task);
   } catch (error: unknown) {
     if (error instanceof Error) {
-      res.status(401).json({ error: error.message });
+      res.status(400).json({ error: error.message });
     }
   }
 };
@@ -95,7 +95,7 @@ const deleteTask: RequestHandler = async (req, res) => {
     res.status(204).end();
   } catch (error) {
     if (error instanceof Error) {
-      res.status(401).json({ error: error.message });
+      res.status(400).json({ error: error.message });
     }
   }
 };
