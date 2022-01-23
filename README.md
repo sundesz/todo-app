@@ -39,7 +39,7 @@
 
 1. Check if port 5432 is used already or not
 
-2. If you have any problem with docker-compose up you can also use your local postgres<br>
+2. If you have any problem with docker-compose you can also use your local postgres<br>
    If you use local postgres please create the table first (todoapp)
 
 <br>
