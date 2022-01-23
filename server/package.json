@@ -4,6 +4,7 @@
   "description": "todo app",
   "main": "index.js",
   "scripts": {
+    "tsc": "tsc",
     "start": "node build/index.js",
     "dev": "NODE_ENV=development ts-node-dev src/index.ts",
     "build:ui": "rm -rf build && cd ../client/ && npm run build && cp -ar build ../server/",
