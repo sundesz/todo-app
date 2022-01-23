@@ -77,7 +77,6 @@ const login: RequestHandler = async (req, res) => {
       res.status(400).json({ error: 'Incorrect username' });
     }
   } catch (error: unknown) {
-    console.log(error);
     if (error instanceof Error) {
       res.status(400).json({ error: error.message });
     }
@@ -91,7 +90,7 @@ const login: RequestHandler = async (req, res) => {
 const refreshToken: RequestHandler = async (req, res) => {
   console.log(req.cookies);
   const { token } = req.body as { token: string };
-  console.log(typeof token);
+
   if (token === null || token === undefined || token === 'undefined') {
     return res.status(204).end();
   }

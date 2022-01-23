@@ -1,4 +1,4 @@
-import express, { Application } from 'express';
+import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import userRouter from './api/routers/user';
@@ -34,8 +34,15 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.static('build'));
 
-app.get('/', (_req, res) => {
+app.get('/', (_req: Request, res: Response) => {
   res.send('<h1>Sandesh Hyoju - Todo app</h1>');
+});
+
+app.get('/ping', (_req: Request, res: Response) => {
+  res.send('pong');
+});
+app.get('/api/v1/test', (_req: Request, res: Response) => {
+  res.send('test');
 });
 
 app.use('/api/v1/users', userRouter);
