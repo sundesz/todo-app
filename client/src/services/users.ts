@@ -24,6 +24,11 @@ export const signOut = async () => {
 export const refreshToken = async () => {
   const token = localStorage.getItem('userToken');
   const response = await axios.post('refreshtoken', { token });
-  localStorage.setItem('userToken', response.data.token);
+
+  if (response.data.token === undefined) {
+    localStorage.removeItem('userToken');
+  } else {
+    localStorage.setItem('userToken', response.data.token);
+  }
   return response.data;
 };

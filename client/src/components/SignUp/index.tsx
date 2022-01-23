@@ -1,10 +1,10 @@
 import * as React from 'react';
 import Container from 'react-bootstrap/Container';
 import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { createUser } from '../../state/action-creators';
 import { IAppState } from '../../state/action-types';
 import { INewUserValues } from '../../types';
-import Tasks from '../Tasks';
 import SignUpForm from './SignUpForm';
 
 const SignUp: React.FC = () => {
@@ -16,7 +16,7 @@ const SignUp: React.FC = () => {
   };
 
   if (user.authentication) {
-    return <Tasks />;
+    return <Redirect to="/" />;
   }
 
   return (

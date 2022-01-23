@@ -41,7 +41,11 @@ export const refetchToken = () => {
       }
     } catch (error) {
       if (error instanceof Error) {
-        dispatch(setNotification({ message: error.message, type: 'danger' }));
+        const message =
+          error.message === 'Network Error'
+            ? 'Please start server first to use this app.'
+            : error.message;
+        dispatch(setNotification({ message, type: 'danger' }));
       }
     }
   };

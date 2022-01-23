@@ -18,6 +18,8 @@ const Tasks = () => {
   // const taskInputRef = React.useRef<HTMLInputElement>(null);
   const [filter, setFilter] = React.useState<FilterType>('all');
 
+  // document.title = 'Todo App Tasks';
+
   const taskSubmitHandler = (
     values: { task: string },
     actions: FormikHelpers<{ task: string }>
@@ -53,7 +55,7 @@ const Tasks = () => {
 
   return (
     <>
-      {tasks.length && (
+      {tasks.length !== 0 && (
         <TaskHeaderActions
           filter={filter}
           filterOnClick={headerActionsHandler}

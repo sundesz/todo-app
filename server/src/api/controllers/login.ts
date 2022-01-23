@@ -91,13 +91,14 @@ const login: RequestHandler = async (req, res) => {
 const refreshToken: RequestHandler = async (req, res) => {
   console.log(req.cookies);
   const { token } = req.body as { token: string };
+  console.log(typeof token);
   if (token === null || token === undefined || token === 'undefined') {
     return res.status(204).end();
   }
 
-  const decodeToken = jwt.verify(token, SECRET_KEY);
+  try {
+    const decodeToken = jwt.verify(token, SECRET_KEY);
 
-  if (decodeToken) {
     const { username } = decodeToken as { username: string };
     const user = await getUser(username);
 
@@ -111,6 +112,8 @@ const refreshToken: RequestHandler = async (req, res) => {
         .status(200)
         .json({ token, username: user.username, tasks: user.tasks });
     }
+  } catch (error) {
+    res.status(204).end();
   }
 };
 

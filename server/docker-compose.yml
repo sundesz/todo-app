@@ -4,12 +4,13 @@ services:
   postgresdb:
     image: postgres
     ports:
-      - 5432:5432
+      - 5431:5432
     restart: always
+    container_name: postgresdb
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: admin
-      POSTGRES_DB: todo-app
+      POSTGRES_DB: todoapp
     volumes:
       - pgdata:/var/lib/postgresql/data
 
