@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import userRouter from './api/routers/user';
 import taskRouter from './api/routers/task';
 import loginRouter from './api/routers/login';
+// require('express-async-errors');
 import {
   errorHandler,
   isValidUser,
@@ -29,8 +30,13 @@ declare global {
 
 const app: Application = express();
 
-app.use(cors());
+app.use(
+  cors({
+    credentials: true,
+  })
+);
 app.use(cookieParser());
+
 app.use(express.json());
 app.use(express.static('build'));
 
@@ -41,13 +47,11 @@ app.get('/', (_req: Request, res: Response) => {
 app.get('/ping', (_req: Request, res: Response) => {
   res.send('pong');
 });
-app.get('/api/v1/test', (_req: Request, res: Response) => {
-  res.send('test');
-});
 
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/tasks', tokenExtractor, isValidUser, taskRouter);
 app.use('/api/v1/', loginRouter);
+// app.get('/api/v1/csrfToken', loginController.getCSRFToken);
 
 if (process.env.NODE_ENV === 'test') {
   app.use('/api/v1/testing', testingRouter);

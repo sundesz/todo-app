@@ -1,13 +1,11 @@
 import { Dispatch } from 'redux';
-import { displayNotification, setNotification } from '.';
+import { catchError, displayNotification } from '.';
 import * as Service from '../../services';
 import { INewUserValues, ISignInValues, ITask } from '../../types';
 import { TaskActionType, UserActionType } from '../action-types';
 
-// TODO:  Cannot show appropriate message as in catch block as  I couldn't access error.response.data
-
 export const createUser = (newUser: INewUserValues) => {
-  // return async (dispatch: Dispatch<UserActionType>) => {
+  // return async (dispatch: Dispatch<UserAction>) => {
   return async (dispatch: Dispatch) => {
     try {
       const savedUser = await Service.createUser(newUser);
@@ -17,16 +15,13 @@ export const createUser = (newUser: INewUserValues) => {
       });
 
       signInDispatch(dispatch, userInfo, true);
-      dispatch(
-        setNotification({
-          message: 'User created successfully',
-          type: 'success',
-        })
-      );
+
+      displayNotification(dispatch, {
+        message: 'User created successfully',
+        type: 'success',
+      });
     } catch (error) {
-      if (error instanceof Error) {
-        dispatch(setNotification({ message: error.message, type: 'danger' }));
-      }
+      catchError(error, dispatch);
     }
   };
 };
@@ -40,12 +35,11 @@ export const refetchToken = () => {
         signInDispatch(dispatch, newToken, true);
       }
     } catch (error) {
-      if (error instanceof Error) {
-        const message =
-          error.message === 'Network Error'
-            ? 'Please start server first to use this app.'
-            : error.message;
-        dispatch(setNotification({ message, type: 'danger' }));
+      if (error instanceof Error && error.message === 'Network Error') {
+        displayNotification(dispatch, {
+          message: 'Please start server first to use this app.',
+          type: 'danger',
+        });
       }
     }
   };
@@ -60,39 +54,28 @@ export const signIn = (user: ISignInValues) => {
       });
 
       signInDispatch(dispatch, userInfo, true);
-      dispatch(
-        setNotification({ message: 'Sign in successfully', type: 'success' })
-      );
-      // TODO: This is not working
-      displayNotification({
+      displayNotification(dispatch, {
         message: 'Sign in successfully',
         type: 'success',
       });
     } catch (error) {
-      if (error instanceof Error) {
-        dispatch(setNotification({ message: error.message, type: 'danger' }));
-      }
+      catchError(error, dispatch);
     }
   };
 };
 
 export const signOut = () => {
   return async (dispatch: Dispatch) => {
-    await Service.signOut();
     try {
+      await Service.signOut();
       dispatch({ type: UserActionType.UNSET_USER });
-      dispatch(
-        setNotification({ message: 'Sign out successfully', type: 'success' })
-      );
-      // TODO: This is not working
-      displayNotification({
-        message: 'Sign out successfully displayNotification',
+
+      displayNotification(dispatch, {
+        message: 'Sign out successfully',
         type: 'success',
       });
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        dispatch(setNotification({ message: error.message, type: 'danger' }));
-      }
+      catchError(error, dispatch);
     }
   };
 };

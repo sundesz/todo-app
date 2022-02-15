@@ -1,3 +1,4 @@
+import { headerRequest } from '.';
 import axios from '../axios';
 import { INewUserValues, ISignInValues } from '../types';
 
@@ -6,7 +7,9 @@ import { INewUserValues, ISignInValues } from '../types';
  */
 
 export const createUser = async (newUser: INewUserValues) => {
-  const response = await axios.post('users', newUser);
+  const response = await axios.post('users', newUser, {
+    // withCredentials: true,
+  });
   return response.data;
 };
 
@@ -23,7 +26,10 @@ export const signOut = async () => {
 
 export const refreshToken = async () => {
   const token = localStorage.getItem('userToken');
-  const response = await axios.post('refreshtoken', { token });
+  if (!token) {
+    return;
+  }
+  const response = await axios.post('refresh', {}, headerRequest(token));
 
   if (response.data.token === undefined) {
     localStorage.removeItem('userToken');

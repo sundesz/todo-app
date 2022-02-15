@@ -1,4 +1,4 @@
-import { RequestHandler } from 'express';
+import { NextFunction, RequestHandler, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { COOKIE_EXPIRE_TIME, SECRET_KEY } from '../../config';
@@ -12,12 +12,12 @@ import { Task, User } from '../../db/models';
 const getUser = async (username: string) => {
   return await User.findOne({
     where: { username },
-    attributes: ['userId', 'username', 'passwordHash'],
+    attributes: ['userId', 'name', 'username', 'passwordHash'],
     include: {
       model: Task,
       attributes: ['taskId', 'content', 'isCompleted'],
     },
-    order: [['userId', 'DESC']],
+    order: [[Task, 'createdAt', 'asc']],
   });
 };
 
@@ -32,19 +32,20 @@ const generateToken = (user: User) => {
   }
 
   const userForToken = {
+    name: user.name,
     username: user.username,
     id: user.userId,
   };
 
   return jwt.sign(userForToken, SECRET_KEY, {
-    expiresIn: COOKIE_EXPIRE_TIME,
+    expiresIn: 5 * 1000 * 60,
   }); // expiresIn 2 hour
 };
 
 /**
  * Login request handler
  */
-const login: RequestHandler = async (req, res) => {
+const login: RequestHandler = async (req, res, next: NextFunction) => {
   try {
     const { username, password } = req.body as {
       username: string;
@@ -56,30 +57,18 @@ const login: RequestHandler = async (req, res) => {
     }
 
     const user = await getUser(username);
-
-    if (user) {
-      const passwordCorrect = await bcrypt.compare(password, user.passwordHash);
-
-      if (!passwordCorrect) {
-        throw new Error('Invalid password');
-      }
-
-      const token = generateToken(user);
-
-      res
-        .cookie('token', token, {
-          httpOnly: true,
-          maxAge: COOKIE_EXPIRE_TIME,
-        })
-        .status(200)
-        .json({ token, username: user.username, tasks: user.tasks });
-    } else {
-      res.status(400).json({ error: 'Incorrect username' });
+    if (!user) {
+      return res.status(400).json({ error: 'Invalid username or password' });
     }
+
+    const passwordCorrect = await bcrypt.compare(password, user.passwordHash);
+    if (!passwordCorrect) {
+      throw new Error('Invalid username or password');
+    }
+
+    loginAndRefreshTokenResponse(res, user);
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      res.status(400).json({ error: error.message });
-    }
+    next(error);
   }
 };
 
@@ -87,32 +76,17 @@ const login: RequestHandler = async (req, res) => {
  * Cannot use req.cookie method here as every time browser refresh token disappears. So I am sending token from body using client localStorage
  * Refresh token when frontend refresh the browser
  */
-const refreshToken: RequestHandler = async (req, res) => {
-  console.log(req.cookies);
-  const { token } = req.body as { token: string };
-
-  if (token === null || token === undefined || token === 'undefined') {
-    return res.status(204).end();
-  }
-
+const refreshToken: RequestHandler = async (req, res, next: NextFunction) => {
   try {
-    const decodeToken = jwt.verify(token, SECRET_KEY);
-
-    const { username } = decodeToken as { username: string };
+    const { username } = req.decodedToken as { username: string };
     const user = await getUser(username);
 
     if (user) {
-      const token = generateToken(user);
-      res
-        .cookie('token', token, {
-          httpOnly: true,
-          maxAge: COOKIE_EXPIRE_TIME,
-        })
-        .status(200)
-        .json({ token, username: user.username, tasks: user.tasks });
+      loginAndRefreshTokenResponse(res, user);
     }
   } catch (error) {
-    res.status(204).end();
+    res.status(200).end();
+    next(error);
   }
 };
 
@@ -124,8 +98,29 @@ const logout: RequestHandler = (_req, res) => {
   res.status(204).end();
 };
 
+const loginAndRefreshTokenResponse = (res: Response, user: User) => {
+  const token = generateToken(user);
+  return res
+    .cookie('token', token, {
+      httpOnly: true,
+      maxAge: COOKIE_EXPIRE_TIME,
+    })
+    .status(200)
+    .json({
+      token,
+      name: user.name,
+      username: user.username,
+      tasks: user.tasks,
+    });
+};
+
+const getCSRFToken: RequestHandler = (req, res) => {
+  res.json({ CSRFToken: req.csrfToken() });
+};
+
 export default {
   login,
   logout,
   refreshToken,
+  getCSRFToken,
 };

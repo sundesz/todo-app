@@ -1,4 +1,4 @@
-import { RequestHandler } from 'express';
+import { NextFunction, RequestHandler } from 'express';
 import jwt from 'jsonwebtoken';
 import { Task, User } from '../db/models';
 import { SECRET_KEY } from '../config';
@@ -6,14 +6,18 @@ import { SECRET_KEY } from '../config';
 /**
  * Extract token from request
  */
-export const tokenExtractor: RequestHandler = (req, res, next) => {
+export const tokenExtractor: RequestHandler = (
+  req,
+  res,
+  next: NextFunction
+) => {
   const authorization = req.get('authorization');
-
   if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
     try {
       req.decodedToken = jwt.verify(authorization.substring(7), SECRET_KEY);
     } catch (error) {
-      return res.status(401).json({ error: 'Invalid Token' });
+      next(error);
+      // return res.status(401).json({ error: 'Invalid Token' });
     }
   } else {
     return res.status(401).json({ error: 'Missing Token' });

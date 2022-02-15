@@ -1,4 +1,4 @@
-import { RequestHandler } from 'express';
+import { NextFunction, RequestHandler } from 'express';
 import { Op } from 'sequelize';
 import { Task, User } from '../../db/models';
 import { parseBoolean } from '../../utils';
@@ -6,7 +6,7 @@ import { parseBoolean } from '../../utils';
 /**
  * Get all tasks by userId
  */
-const getAllTasks: RequestHandler = async (req, res) => {
+const getAllTasks: RequestHandler = async (req, res, next: NextFunction) => {
   const { id: userId } = req.decodedToken as { id: string };
 
   // type TIsCompleted =
@@ -37,16 +37,14 @@ const getAllTasks: RequestHandler = async (req, res) => {
     });
     res.json(tasks);
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      res.status(400).json({ error: error.message });
-    }
+    next(error);
   }
 };
 
 /**
  * Create new task
  */
-const createTask: RequestHandler = async (req, res) => {
+const createTask: RequestHandler = async (req, res, next: NextFunction) => {
   try {
     const { content } = req.body as { content: string };
     const { id } = req.decodedToken as { id: string };
@@ -59,16 +57,14 @@ const createTask: RequestHandler = async (req, res) => {
 
     res.json(task);
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      res.status(400).json({ error: error.message });
-    }
+    next(error);
   }
 };
 
 /**
  * Update task
  */
-const updateTask: RequestHandler = async (req, res) => {
+const updateTask: RequestHandler = async (req, res, next: NextFunction) => {
   try {
     const task = req.task as Task;
     const { isCompleted } = req.body as { isCompleted: string };
@@ -78,25 +74,21 @@ const updateTask: RequestHandler = async (req, res) => {
 
     res.json(task);
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      res.status(400).json({ error: error.message });
-    }
+    next(error);
   }
 };
 
 /**
  * delete task
  */
-const deleteTask: RequestHandler = async (req, res) => {
+const deleteTask: RequestHandler = async (req, res, next: NextFunction) => {
   try {
     const task = req.task as Task;
     void (await task.destroy());
 
     res.status(204).end();
   } catch (error) {
-    if (error instanceof Error) {
-      res.status(400).json({ error: error.message });
-    }
+    next(error);
   }
 };
 

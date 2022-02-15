@@ -51,7 +51,7 @@ describe('login', () => {
       .post('/api/v1/login')
       .send({ username: 'sandesh', password: 'sandesh' })
       .expect(400)
-      .expect({ error: 'Incorrect username' });
+      .expect({ error: 'Invalid username or password' });
   });
 });
 

@@ -45,7 +45,7 @@ describe('Todo App', function () {
       cy.get('#username').type('sundesz@gmail.com');
       cy.get('#password').type('sandesh1');
       cy.get('#signin-btn').click();
-      cy.get('.notification').contains('Request failed with status code 400');
+      cy.get('.notification').contains('Invalid username or password');
     });
 
     describe('When logged in', function () {

@@ -7,7 +7,7 @@ Content-Type: application/json
 
 {
   "name": "sandesh",
-  "username": "sundesz@gmail",
+  "username": "sundesz@gmail.com",
   "password": "sandesh"
 }
 
@@ -19,3 +19,12 @@ Content-Type: application/json
   "username": "sundesz@gmail.com",
   "password": "sandesh"
 }
+
+
+###
+GET http://localhost:3001/api/v1/csrfToken
+
+
+###
+POST http://localhost:3001/api/v1/refresh
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiU2FuZGVzaCBIeW9qdSIsInVzZXJuYW1lIjoic3VuZGVzekBnbWFpbC5jb20iLCJpZCI6ImJhNDk4NDExLTMzZjAtNDZhYy1iNTQzLTcyNDE4ZDljN2EwNCIsImlhdCI6MTY0NDk1Mzc4NiwiZXhwIjoxNjQ1MjUzNzg2fQ.Y6FUMB4RWlbcQU6vmXnP9AbDIBuAdwTgOHLRXfHuQTk

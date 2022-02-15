@@ -15,7 +15,7 @@ const DismissibleAlert = (): JSX.Element => {
     setShow(true);
   };
 
-  if (show && notification.message.length) {
+  if (show && notification.message?.length) {
     return (
       <Alert
         className="notification"
