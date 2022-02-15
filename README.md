@@ -10,13 +10,7 @@
 
 ## Info
 
-1. Cannot show appropriate message when we got response from server as in catch block as I couldn't access error.response.data<br>
-   Eg:When trying to login with wrong username, it shows "Request failed with status code 400" Instead of showing "Incorrect username".
-
-2. Notification always keeps showing. You need to close it manually
-   I have made a method to close it after 5sec but some how it doesn't work
-
-3. Browser cookies removes every time I refresh the page so I need to use localstorage to save token value.<br>
+1. Browser cookies removes every time I refresh the page so I need to use localstorage to save token value.<br>
    Because of this I need to send token manually in request body when refetching the token
 
 <br>
