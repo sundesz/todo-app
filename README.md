@@ -8,11 +8,6 @@
 **npm run test:e2e**: To start test<br>
 (please start the server in test-mode using npm run start:test first )
 
-## Info
-
-1. Browser cookies removes every time I refresh the page so I need to use localstorage to save token value.<br>
-   Because of this I need to send token manually in request body when refetching the token
-
 <br>
 <br>
 <br>
