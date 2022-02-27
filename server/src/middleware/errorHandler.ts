@@ -11,7 +11,7 @@ export const errorHandler: ErrorRequestHandler = (error, _req, res, next) => {
         error.message === 'invalid signature'
           ? 'Invalid token'
           : (error.message as string);
-      return res.status(400).json({ error: message });
+      return res.status(401).json({ error: message });
     default:
       return res.status(400).json({ error: error.message as string });
   }

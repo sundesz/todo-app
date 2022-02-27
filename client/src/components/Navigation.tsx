@@ -3,10 +3,10 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { IAppState } from '../state/action-types';
+import { AppState } from '../state';
 
 const Navigation: React.FC = (): JSX.Element => {
-  const user = useSelector((state: IAppState) => state.user);
+  const user = useSelector((state: AppState) => state.user);
 
   return (
     <>

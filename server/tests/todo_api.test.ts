@@ -6,6 +6,7 @@ import { connectToDatabase } from '../src/db';
 import { Task, User } from '../src/db/models';
 import bcrypt from 'bcrypt';
 import { SALT } from '../src/config';
+import cookie from 'cookie';
 // import sequelize from 'sequelize';
 
 // eslint-disable-next-line @typescript-eslint/no-unsafe-call
@@ -31,7 +32,7 @@ beforeEach(async () => {
     .post('/api/v1/login')
     .send({ username: 'sundesz@gmail.com', password: 'sandesh' });
 
-  token = login.body.token;
+  token = cookie.parse((login.header['set-cookie'][0] as string) || '').auth;
 });
 
 test('test', async function () {
@@ -55,8 +56,8 @@ describe('login', () => {
   });
 });
 
-describe('Without Authentication header', () => {
-  test('task can be created without authentication header', async () => {
+describe('Without Authentication header cookie', () => {
+  test('task cannot be created without authentication header cookie', async () => {
     const newTask = {
       content: 'This is a new task',
     };
@@ -71,8 +72,9 @@ describe('create of new task', () => {
     };
     await api
       .post('/api/v1/tasks')
+      .set('Cookie', `auth=${token};`)
       .send(newTask)
-      .auth(token, { type: 'bearer' })
+      // .auth(token, { type: 'bearer' })
       .expect(200);
   });
 });
@@ -85,8 +87,9 @@ describe('When there is a task', () => {
     };
     const response = await api
       .post('/api/v1/tasks')
+      .set('Cookie', `auth=${token};`)
       .send(newTask)
-      .auth(token, { type: 'bearer' })
+      // .auth(token, { type: 'bearer' })
       .expect(200);
 
     taskId = response.body.taskId;
@@ -100,7 +103,8 @@ describe('When there is a task', () => {
   test('task can be updated', async () => {
     await api
       .put(`/api/v1/tasks/${taskId}`)
-      .auth(token, { type: 'bearer' })
+      .set('Cookie', `auth=${token};`)
+      // .auth(token, { type: 'bearer' })
       .send({ isCompleted: 'true' })
       .expect(200);
   });
@@ -108,7 +112,8 @@ describe('When there is a task', () => {
   test('task can be deleted', async () => {
     await api
       .del(`/api/v1/tasks/${taskId}`)
-      .auth(token, { type: 'bearer' })
+      .set('Cookie', `auth=${token};`)
+      // .auth(token, { type: 'bearer' })
       .expect(204);
   });
 });

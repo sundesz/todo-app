@@ -1,20 +1,27 @@
 import { Dispatch } from 'redux';
-import { NotificationActionType, NotificationState } from '../action-types';
+import { NotificationActionType, INotificationState } from '../action-types';
+import {
+  IResetNotificationAction,
+  ISetNotificationAction,
+  NotificationAction,
+} from '../actions';
 
 let notificationTimeoutID: ReturnType<typeof setTimeout>;
 
-export const setNotification = (notification: NotificationState) => ({
+export const setNotification = (
+  notification: INotificationState
+): ISetNotificationAction => ({
   type: NotificationActionType.SET_NOTIFICATION,
   payload: notification,
 });
 
-export const resetNotification = () => ({
+export const resetNotification = (): IResetNotificationAction => ({
   type: NotificationActionType.RESET_NOTIFICATION,
 });
 
 export const displayNotification = async (
-  dispatch: Dispatch,
-  notification: NotificationState
+  dispatch: Dispatch<NotificationAction>,
+  notification: INotificationState
 ) => {
   dispatch(setNotification(notification));
   clearTimeout(notificationTimeoutID);

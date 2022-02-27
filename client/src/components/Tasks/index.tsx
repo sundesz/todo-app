@@ -1,9 +1,8 @@
 import { FormikHelpers } from 'formik';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import useToken from '../../hooks/useToken';
+import { AppState } from '../../state';
 import { createTask } from '../../state/action-creators';
-import { IAppState } from '../../state/action-types';
 import { FilterType } from '../../types';
 import Home from '../Home';
 import Task from './Task';
@@ -12,9 +11,9 @@ import TaskHeaderActions from './TaskHeaderActions';
 
 const Tasks = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state: IAppState) => state.user);
-  const tasks = useSelector((state: IAppState) => state.task.tasks);
-  const { token } = useToken();
+  const user = useSelector((state: AppState) => state.user);
+  const tasks = useSelector((state: AppState) => state.task.tasks);
+
   // const taskInputRef = React.useRef<HTMLInputElement>(null);
   const [filter, setFilter] = React.useState<FilterType>('all');
 
@@ -24,7 +23,7 @@ const Tasks = () => {
     values: { task: string },
     actions: FormikHelpers<{ task: string }>
   ) => {
-    dispatch(createTask({ content: values.task, isCompleted: false }, token));
+    dispatch(createTask({ content: values.task, isCompleted: false }));
     actions.resetForm();
 
     // if (taskInputRef && taskInputRef.current) {

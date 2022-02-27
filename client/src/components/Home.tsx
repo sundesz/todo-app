@@ -1,11 +1,12 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
 import { useSelector } from 'react-redux';
-import { IAppState } from '../state/action-types';
+import { AppState } from '../state';
+
 import Tasks from './Tasks';
 
 const Home = () => {
-  const user = useSelector((state: IAppState) => state.user);
+  const user = useSelector((state: AppState) => state.user);
 
   if (user.authentication) {
     return <Tasks />;

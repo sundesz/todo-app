@@ -26,7 +26,8 @@ const DB_DRIVER = process.env.DB_DRIVER;
 const PORT = process.env.PORT || 3001;
 const SECRET_KEY = process.env.SECRET_KEY as string;
 const SALT = process.env.SALT as string;
-const COOKIE_EXPIRE_TIME = 7200 as number; // 2hours
+const COOKIE_EXPIRE_TIME = (process.env.COOKIE_EXPIRE_TIME ||
+  2 * 60 * 60) as number; // 2hours
 
 export {
   DATABASE_URL,

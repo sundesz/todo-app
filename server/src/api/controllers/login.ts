@@ -1,6 +1,7 @@
 import { NextFunction, RequestHandler, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import cookie from 'cookie';
 import { COOKIE_EXPIRE_TIME, SECRET_KEY } from '../../config';
 import { Task, User } from '../../db/models';
 
@@ -38,7 +39,7 @@ const generateToken = (user: User) => {
   };
 
   return jwt.sign(userForToken, SECRET_KEY, {
-    expiresIn: 5 * 1000 * 60,
+    expiresIn: COOKIE_EXPIRE_TIME,
   }); // expiresIn 2 hour
 };
 
@@ -73,7 +74,6 @@ const login: RequestHandler = async (req, res, next: NextFunction) => {
 };
 
 /**
- * Cannot use req.cookie method here as every time browser refresh token disappears. So I am sending token from body using client localStorage
  * Refresh token when frontend refresh the browser
  */
 const refreshToken: RequestHandler = async (req, res, next: NextFunction) => {
@@ -94,33 +94,35 @@ const refreshToken: RequestHandler = async (req, res, next: NextFunction) => {
  * Logout handler
  */
 const logout: RequestHandler = (_req, res) => {
-  res.clearCookie('token');
+  res.setHeader('Set-Cookie', '');
+  res.clearCookie('auth');
   res.status(204).end();
 };
 
 const loginAndRefreshTokenResponse = (res: Response, user: User) => {
   const token = generateToken(user);
+
   return res
-    .cookie('token', token, {
-      httpOnly: true,
-      maxAge: COOKIE_EXPIRE_TIME,
-    })
+    .setHeader(
+      'Set-Cookie',
+      cookie.serialize('auth', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+        maxAge: COOKIE_EXPIRE_TIME,
+        path: '/',
+      })
+    )
     .status(200)
     .json({
-      token,
       name: user.name,
       username: user.username,
       tasks: user.tasks,
     });
 };
 
-const getCSRFToken: RequestHandler = (req, res) => {
-  res.json({ CSRFToken: req.csrfToken() });
-};
-
 export default {
   login,
   logout,
   refreshToken,
-  getCSRFToken,
 };

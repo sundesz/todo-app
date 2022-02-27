@@ -92,9 +92,14 @@ const deleteTask: RequestHandler = async (req, res, next: NextFunction) => {
   }
 };
 
+const getCSRFToken: RequestHandler = (req, res) => {
+  res.json({ CSRFToken: req.csrfToken() });
+};
+
 export default {
   getAllTasks,
   createTask,
   updateTask,
   deleteTask,
+  getCSRFToken,
 };

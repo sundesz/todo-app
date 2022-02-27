@@ -1,8 +1,14 @@
-import { NotificationActionType, NotificationState } from '../action-types';
+import { NotificationActionType, INotificationState } from '../action-types';
+
+export interface ISetNotificationAction {
+  type: NotificationActionType.SET_NOTIFICATION;
+  payload: INotificationState;
+}
+
+export interface IResetNotificationAction {
+  type: NotificationActionType.RESET_NOTIFICATION;
+}
 
 export type NotificationAction =
-  | {
-      type: NotificationActionType.SET_NOTIFICATION;
-      payload: NotificationState;
-    }
-  | { type: NotificationActionType.RESET_NOTIFICATION };
+  | ISetNotificationAction
+  | IResetNotificationAction;

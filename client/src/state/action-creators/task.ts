@@ -3,11 +3,14 @@ import { TaskActionType } from '../action-types';
 import * as Service from '../../services';
 import { ITask, INewTask } from '../../types';
 import { catchError, displayNotification } from '.';
+import { NotificationAction, TaskAction } from '../actions';
 
-export const createTask = (task: INewTask, token: string | null) => {
-  return async (dispatch: Dispatch) => {
+export type TaskAndNotificationAction = TaskAction | NotificationAction;
+
+export const createTask = (task: INewTask) => {
+  return async (dispatch: Dispatch<TaskAndNotificationAction>) => {
     try {
-      const newTask = await Service.createTask(task, token);
+      const newTask = await Service.createTask(task);
       dispatch({ type: TaskActionType.CREATE_TASK, payload: newTask });
       displayNotification(dispatch, {
         message: 'Task created successfully',
@@ -21,15 +24,13 @@ export const createTask = (task: INewTask, token: string | null) => {
 
 export const updateTaskIsCompleted = (
   taskId: string,
-  isCompleted: { isCompleted: boolean },
-  token: string | null
+  isCompleted: { isCompleted: boolean }
 ) => {
-  return async (dispatch: Dispatch) => {
+  return async (dispatch: Dispatch<TaskAndNotificationAction>) => {
     try {
       const response: ITask = await Service.updateTaskIsCompleted(
         taskId,
-        isCompleted,
-        token
+        isCompleted
       );
 
       dispatch({ type: TaskActionType.UPDATE_TASK, payload: response });
@@ -43,10 +44,10 @@ export const updateTaskIsCompleted = (
   };
 };
 
-export const deleteTask = (taskId: string, token: string | null) => {
-  return async (dispatch: Dispatch) => {
+export const deleteTask = (taskId: string) => {
+  return async (dispatch: Dispatch<TaskAndNotificationAction>) => {
     try {
-      await Service.deleteTask(taskId, token);
+      await Service.deleteTask(taskId);
       dispatch({ type: TaskActionType.DELETE_TASK, payload: taskId });
       displayNotification(dispatch, {
         message: 'Task deleted successfully',

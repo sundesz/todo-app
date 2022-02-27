@@ -6,7 +6,6 @@ import { XCircleFill } from 'react-bootstrap-icons';
 import { ITask } from '../../types';
 import { useDispatch } from 'react-redux';
 import { deleteTask, updateTaskIsCompleted } from '../../state/action-creators';
-import useToken from '../../hooks/useToken';
 
 interface ITaskComponent {
   task: ITask;
@@ -15,7 +14,6 @@ interface ITaskComponent {
 const Task: React.FC<ITaskComponent> = ({ task }): JSX.Element => {
   const [checkboxValue, setCheckboxValue] = React.useState<boolean>(false);
   const dispatch = useDispatch();
-  const { token } = useToken();
 
   const changeCompletedHandler = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -23,13 +21,13 @@ const Task: React.FC<ITaskComponent> = ({ task }): JSX.Element => {
   ) => {
     const body = { isCompleted: !checkboxValue };
     setCheckboxValue((value) => !value);
-    dispatch(updateTaskIsCompleted(taskId, body, token));
+    dispatch(updateTaskIsCompleted(taskId, body));
   };
 
   const deleteTaskHandler = (taskId: string) => {
     const confirm = window.confirm('Are you sure you want to delete?');
     if (confirm) {
-      dispatch(deleteTask(taskId, token));
+      dispatch(deleteTask(taskId));
     }
   };
 

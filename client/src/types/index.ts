@@ -23,6 +23,7 @@ export interface IUser {
 export interface ISignInValues {
   username: string;
   password: string;
+  _csrf?: string;
 }
 
 export interface INewUserValues {

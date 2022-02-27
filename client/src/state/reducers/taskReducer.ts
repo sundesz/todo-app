@@ -1,12 +1,15 @@
-import { TaskActionType, TaskState } from '../action-types';
+import { TaskActionType, ITaskState } from '../action-types';
 import { TaskAction } from '../actions';
 
-const initialState: TaskState = {
+const initialState: ITaskState = {
   tasks: [],
   loading: false,
 };
 
-export const taskReducer = (state = initialState, action: TaskAction) => {
+export const taskReducer = (
+  state = initialState,
+  action: TaskAction
+): ITaskState => {
   switch (action.type) {
     case TaskActionType.SET_TASKS:
       return { ...state, tasks: action.payload };
@@ -20,7 +23,6 @@ export const taskReducer = (state = initialState, action: TaskAction) => {
       );
       return { ...state, tasks: [...tasks] };
     }
-
     case TaskActionType.DELETE_TASK: {
       const tasks = state.tasks.filter(
         (task) => task.taskId !== action.payload

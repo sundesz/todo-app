@@ -1,13 +1,13 @@
 import React from 'react';
 import Alert from 'react-bootstrap/Alert';
 import { useDispatch, useSelector } from 'react-redux';
-import { IAppState } from '../state/action-types';
+import { AppState } from '../state';
 import { resetNotification } from '../state/action-creators';
 
 const DismissibleAlert = (): JSX.Element => {
   const dispatch = useDispatch();
   const [show, setShow] = React.useState<boolean>(true);
-  const notification = useSelector((state: IAppState) => state.notification);
+  const notification = useSelector((state: AppState) => state.notification);
 
   const alertCloseHandler = () => {
     dispatch(resetNotification());

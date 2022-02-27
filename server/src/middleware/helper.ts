@@ -1,7 +1,9 @@
 import { NextFunction, RequestHandler } from 'express';
 import jwt from 'jsonwebtoken';
+import cookie from 'cookie';
 import { Task, User } from '../db/models';
 import { SECRET_KEY } from '../config';
+import csurf from 'csurf';
 
 /**
  * Extract token from request
@@ -11,17 +13,28 @@ export const tokenExtractor: RequestHandler = (
   res,
   next: NextFunction
 ) => {
-  const authorization = req.get('authorization');
-  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-    try {
-      req.decodedToken = jwt.verify(authorization.substring(7), SECRET_KEY);
-    } catch (error) {
-      next(error);
-      // return res.status(401).json({ error: 'Invalid Token' });
+  const cookieToken = cookie.parse(req.headers.cookie || '');
+
+  try {
+    if (!cookieToken.auth && req.url === '/refresh') {
+      return res.status(204).end();
     }
-  } else {
-    return res.status(401).json({ error: 'Missing Token' });
+    req.decodedToken = jwt.verify(cookieToken.auth, SECRET_KEY);
+  } catch (error) {
+    next(error);
   }
+
+  // const authorization = req.get('authorization');
+  // if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+  //   try {
+  //     req.decodedToken = jwt.verify(authorization.substring(7), SECRET_KEY);
+  //   } catch (error) {
+  //     next(error);
+  //     // return res.status(401).json({ error: 'Invalid Token' });
+  //   }
+  // } else {
+  //   return res.status(401).json({ error: 'Missing Token' });
+  // }
 
   next();
 };
@@ -57,3 +70,5 @@ export const taskFinder: RequestHandler = async (req, res, next) => {
 
   next();
 };
+
+export const csrfProtection = csurf({ cookie: true });
