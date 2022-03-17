@@ -21,9 +21,6 @@ Content-Type: application/json
 }
 
 
-###
-GET http://localhost:3001/api/v1/csrfToken
-
 
 ###
 POST http://localhost:3001/api/v1/refresh

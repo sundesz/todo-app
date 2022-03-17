@@ -54,12 +54,9 @@ export const refetchToken = () => {
 export const signIn = (user: ISignInValues) => {
   return async (dispatch: Dispatch<UserTaskAndNotificationAction>) => {
     try {
-      const csrfToken = await Service.getCSRFToken();
-
       const userInfo = await Service.signIn({
         username: user.username,
         password: user.password,
-        _csrf: csrfToken.CSRFToken,
       });
 
       signInDispatch(dispatch, userInfo, true);

@@ -36,7 +36,4 @@
 <br>
 
 # For test
-
-I am little confuse Should i create new image for test or just use the same image with different table name. So for now I just use the existing image.
-
-## **NOTE**: Please create a table **todoapptest** first. Before you start the test.
+## Please create a table **todoapptest** first. Before you start the test.

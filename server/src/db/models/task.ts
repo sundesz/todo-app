@@ -5,7 +5,7 @@ export interface ITaskAttribute {
   taskId: string;
   content: string;
   isCompleted?: boolean;
-  userUserId?: string;
+  userId?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -14,13 +14,13 @@ export interface ITaskAttribute {
 export type ITaskInput = Omit<ITaskAttribute, 'taskId'>;
 
 // defines the returned object from model.create, model.update, and model.findOne
-export type ITaskOutput = Omit<ITaskAttribute, 'userUserId'>;
+export type ITaskOutput = Omit<ITaskAttribute, 'userId'>;
 
 class Task extends Model<ITaskAttribute, ITaskInput> implements ITaskAttribute {
   public taskId!: string;
   public content!: string;
   public isCompleted!: boolean;
-  public userUserId!: string;
+  public userId!: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -41,16 +41,15 @@ Task.init(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
-    // we don't need this as we join the table using sequelize hasMany and belongsto method
-    // userId: {
-    //   type: DataTypes.UUID,
-    //   allowNull: false,
-    //   unique: true,
-    //   references: {
-    //     model: 'users',
-    //     key: 'user_id',
-    //   },
-    // },
+    userId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      unique: true,
+      references: {
+        model: 'user',
+        key: 'userId',
+      },
+    },
   },
   {
     sequelize,

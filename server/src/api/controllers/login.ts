@@ -40,7 +40,7 @@ const generateToken = (user: User) => {
 
   return jwt.sign(userForToken, SECRET_KEY, {
     expiresIn: COOKIE_EXPIRE_TIME,
-  }); // expiresIn 2 hour
+  });
 };
 
 /**

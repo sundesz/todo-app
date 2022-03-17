@@ -24,12 +24,3 @@ export const refreshToken = async () => {
   const response = await axios.post('refresh', {}, headerRequest());
   return response.data;
 };
-
-export const getCSRFToken = async () => {
-  try {
-    const response = await axios.get('csrfToken');
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
-};

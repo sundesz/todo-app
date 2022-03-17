@@ -59,7 +59,6 @@ User.init(
     underscored: true,
     timestamps: true,
     modelName: 'user',
-    // paranoid: true  // this imposes a soft delete on the model by adding a deletedAt attribute that marks records as deleted when invoking the destroy method.
   }
 );
 

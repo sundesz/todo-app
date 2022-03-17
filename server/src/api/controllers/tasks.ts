@@ -9,13 +9,6 @@ import { parseBoolean } from '../../utils';
 const getAllTasks: RequestHandler = async (req, res, next: NextFunction) => {
   const { id: userId } = req.decodedToken as { id: string };
 
-  // type TIsCompleted =
-  //   | {
-  //       [OpTypes.in]: boolean[];
-  //     }
-  //   | boolean;
-  // let isCompleted: TIsCompleted; // this does not work
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let isCompleted: any = {
     [Op.in]: [true, false],
@@ -28,9 +21,9 @@ const getAllTasks: RequestHandler = async (req, res, next: NextFunction) => {
 
   try {
     const tasks = await Task.findAll({
-      attributes: { exclude: ['userUserId'] },
+      attributes: { exclude: ['userId'] },
       where: {
-        userUserId: userId,
+        userId: userId,
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         isCompleted,
       },
@@ -53,7 +46,7 @@ const createTask: RequestHandler = async (req, res, next: NextFunction) => {
       throw new Error('Invalid Token. Please login again.');
     }
 
-    const task = await Task.create({ content, userUserId: user.userId });
+    const task = await Task.create({ content, userId: user.userId });
 
     res.json(task);
   } catch (error: unknown) {
@@ -92,14 +85,9 @@ const deleteTask: RequestHandler = async (req, res, next: NextFunction) => {
   }
 };
 
-const getCSRFToken: RequestHandler = (req, res) => {
-  res.json({ CSRFToken: req.csrfToken() });
-};
-
 export default {
   getAllTasks,
   createTask,
   updateTask,
   deleteTask,
-  getCSRFToken,
 };
