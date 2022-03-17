@@ -34,6 +34,7 @@
 .footer-container div {
   font-size: 20px;
   font-weight: bold;
+  color: #fff;
 }
 
 .add-task-container {
@@ -68,11 +69,16 @@
 }
 
 .nav-link {
-  color: #000;
+  color: #fff;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  color: #002050;
 }
 
 .navbar-dark .navbar-text {
-  color: #555;
+  color: #fff;
 }
 
 .header-navbar {

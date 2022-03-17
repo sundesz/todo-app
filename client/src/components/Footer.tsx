@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 
 const Footer = () => {
   return (
-    <Container className="bg-info footer-container">
+    <Container className="bg-primary footer-container">
       <div className="text-center">Sandesh Hyoju</div>
     </Container>
   );
