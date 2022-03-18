@@ -1,8 +1,5 @@
 import React from 'react';
-import Form from 'react-bootstrap/Form';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import { XCircleFill } from 'react-bootstrap-icons';
+import { Trash, Pencil } from 'react-bootstrap-icons';
 import { ITask } from '../../types';
 import { useDispatch } from 'react-redux';
 import { deleteTask, updateTask } from '../../state/action-creators';
@@ -48,49 +45,57 @@ const Task: React.FC<ITaskComponent> = ({ task }): JSX.Element => {
 
   return (
     <div className="task-detail">
-      <br />
+      <div className="td-col-1">
+        <input
+          type="checkbox"
+          checked={checkboxValue}
+          className="task-checkbox"
+          onChange={(e) => changeCompletedHandler(e, task.taskId)}
+        />
+      </div>
 
-      <Row className="align-items-center">
-        <Col sm={{ span: 1, offset: 2 }}>
-          <Form.Check
-            type="checkbox"
-            checked={checkboxValue}
-            className="mb-2 task-checkbox"
-            onChange={(e) => changeCompletedHandler(e, task.taskId)}
-          />
-        </Col>
-        <Col sm="6">
-          <Form.Label
-            htmlFor="inlineFormInput"
-            className={`task-label ${
-              checkboxValue
-                ? 'delete-text'
-                : task.important
-                ? 'task-important'
-                : 'cursor-pointer'
-            }`}
-            title={
-              checkboxValue
-                ? 'Task completed'
-                : task.important
-                ? 'This is important'
-                : 'Click to mark this task as important'
-            }
-            onClick={() => changeImportantHandler(task.taskId)}
+      <div className="td-col-2">
+        <label
+          className={`task-label ${
+            checkboxValue
+              ? 'delete-text'
+              : task.important
+              ? 'task-important'
+              : 'cursor-pointer'
+          }`}
+          title={
+            checkboxValue
+              ? 'Task completed'
+              : task.important
+              ? 'This is important'
+              : 'Click to mark this task as important'
+          }
+          onClick={() => changeImportantHandler(task.taskId)}
+        >
+          {task.content}
+        </label>
+      </div>
+
+      <div className="td-col-3">
+        <div className="btn-group" role="group" aria-label="Task controls">
+          {/* <button
+            type="button"
+            className="btn btn-secondary"
+            title="Edit"
+            onClick={() => updateTaskHandler(task.taskId)}
           >
-            {task.content}
-          </Form.Label>
-        </Col>
-        <Col sm="2">
-          <XCircleFill
-            className="task-delete"
-            color="red"
-            size={32}
-            style={{ marginBottom: 10, cursor: 'pointer' }}
+            <Pencil size={20} />
+          </button> */}
+          <button
+            type="button"
+            className="btn btn-danger task-delete"
+            title="Delete"
             onClick={() => deleteTaskHandler(task.taskId)}
-          />
-        </Col>
-      </Row>
+          >
+            <Trash size={20} />
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

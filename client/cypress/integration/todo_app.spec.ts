@@ -79,11 +79,11 @@ describe('Todo App', function () {
           cy.get('#task').type('New task 3');
           cy.get('#addtask-btn').click();
 
-          cy.get('.task-checkbox input').first().click();
+          cy.get('.task-checkbox').first().click();
         });
 
         it('task can be marked done', function () {
-          cy.get('.task-checkbox input').eq(1).click();
+          cy.get('.task-checkbox').eq(1).click();
 
           cy.get('#all').click();
           cy.get('.task-detail').should(($taskDetail) => {

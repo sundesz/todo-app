@@ -1,23 +1,6 @@
 .task-actions {
   background-color: #add8e6;
-}
-.task-actions ul {
-  list-style: none;
   padding: 10px;
-}
-
-.task-actions ul li {
-  padding: 0 5px;
-  display: inline-block;
-}
-
-.task-actions ul li span {
-  font-size: 18px;
-  cursor: pointer;
-}
-
-.task-actions ul li span:hover {
-  font-weight: bold;
 }
 
 .font-weight-bold {
@@ -55,21 +38,32 @@
 }
 
 .task-label {
-  font-size: 24px;
+  font-size: 22px;
 }
 
-.task-checkbox input:checked[type='checkbox'] {
+input:checked[type='checkbox'].task-checkbox {
   border: transparent;
 }
-.task-checkbox input[type='checkbox'] {
-  width: 32px;
-  height: 32px;
-  border: 5px solid;
+.task-checkbox {
+  width: 24px;
+  height: 24px;
+  border: 2px solid;
   cursor: pointer;
 }
 
-.nav-link {
+.right-side-link {
+  gap: 10px;
+}
+
+.right-side-link .nav-link {
   color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.right-side-link .nav-link .link-description {
+  font-size: 12px;
 }
 
 .nav-link:hover,
@@ -94,4 +88,38 @@
   color: #ff0000;
   font-weight: bold;
   cursor: pointer;
+}
+
+.task-lists {
+  display: flex;
+  flex-direction: column;
+  /* gap: 5px; */
+}
+
+.task-detail {
+  display: flex;
+  gap: 5px;
+}
+
+.task-detail .btn-group .btn {
+  padding-bottom: 10px;
+}
+
+.td-col-1 {
+  flex: 1;
+  align-self: center;
+  text-align: right;
+  padding: 10px;
+}
+
+.td-col-2 {
+  flex: 2;
+  text-align: left;
+  padding: 10px;
+}
+
+.td-col-3 {
+  flex: 1;
+  text-align: left;
+  padding: 10px;
 }

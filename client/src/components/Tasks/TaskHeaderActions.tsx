@@ -13,47 +13,45 @@ const TaskHeaderActions: React.FC<ITaskHeaderActions> = ({
 }) => {
   return (
     <div className="text-center task-actions">
-      <ul>
-        <li>
-          <span
-            id="all"
-            className={`${filter === 'all' ? 'font-weight-bold' : ''}`}
-            onClick={() => filterOnClick('all')}
-          >
-            All
-          </span>
-        </li>
-        <li>|</li>
-        <li>
-          <span
-            id="important"
-            className={`${filter === 'important' ? 'font-weight-bold' : ''}`}
-            onClick={() => filterOnClick('important')}
-          >
-            Important
-          </span>
-        </li>
-        <li>|</li>
-        <li>
-          <span
-            id="incomplete"
-            className={`${filter === 'incomplete' ? 'font-weight-bold' : ''}`}
-            onClick={() => filterOnClick('incomplete')}
-          >
-            Incomplete
-          </span>
-        </li>
-        <li>|</li>
-        <li>
-          <span
-            id="complete"
-            className={`${filter === 'complete' ? 'font-weight-bold' : ''}`}
-            onClick={() => filterOnClick('complete')}
-          >
-            Complete
-          </span>
-        </li>
-      </ul>
+      <span className="font-weight-bold">Filter tasks &nbsp;&nbsp;</span>
+      <div className="btn-group">
+        <button
+          id="all"
+          type="button"
+          className={`btn btn-success ${filter === 'all' ? 'active' : ''}`}
+          onClick={() => filterOnClick('all')}
+        >
+          All
+        </button>
+        <button
+          id="important"
+          type="button"
+          className={`btn btn-success ${
+            filter === 'important' ? 'active' : ''
+          }`}
+          onClick={() => filterOnClick('important')}
+        >
+          Important
+        </button>
+        <button
+          id="complete"
+          type="button"
+          className={`btn btn-success ${filter === 'complete' ? 'active' : ''}`}
+          onClick={() => filterOnClick('complete')}
+        >
+          Complete
+        </button>
+        <button
+          id="incomplete"
+          type="button"
+          className={`btn btn-success ${
+            filter === 'incomplete' ? 'active' : ''
+          }`}
+          onClick={() => filterOnClick('incomplete')}
+        >
+          Incomplete
+        </button>
+      </div>
     </div>
   );
 };

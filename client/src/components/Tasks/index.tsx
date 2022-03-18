@@ -61,6 +61,8 @@ const Tasks = () => {
         />
       )}
 
+      <br />
+
       <div className="task-lists">
         {tasks.length === 0 && (
           <div className="no-tasks">No Tasks. Please add tasks</div>
