@@ -16,7 +16,7 @@ const getUser = async (username: string) => {
     attributes: ['userId', 'name', 'username', 'passwordHash'],
     include: {
       model: Task,
-      attributes: ['taskId', 'content', 'isCompleted'],
+      attributes: ['taskId', 'content', 'isCompleted', 'important'],
     },
     order: [[Task, 'createdAt', 'asc']],
   });

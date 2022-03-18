@@ -26,6 +26,16 @@ const TaskHeaderActions: React.FC<ITaskHeaderActions> = ({
         <li>|</li>
         <li>
           <span
+            id="important"
+            className={`${filter === 'important' ? 'font-weight-bold' : ''}`}
+            onClick={() => filterOnClick('important')}
+          >
+            Important
+          </span>
+        </li>
+        <li>|</li>
+        <li>
+          <span
             id="incomplete"
             className={`${filter === 'incomplete' ? 'font-weight-bold' : ''}`}
             onClick={() => filterOnClick('incomplete')}

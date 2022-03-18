@@ -60,9 +60,13 @@ const createTask: RequestHandler = async (req, res, next: NextFunction) => {
 const updateTask: RequestHandler = async (req, res, next: NextFunction) => {
   try {
     const task = req.task as Task;
-    const { isCompleted } = req.body as { isCompleted: string };
+    const { isCompleted, important } = req.body as {
+      isCompleted: string;
+      important: string;
+    };
 
     task.isCompleted = parseBoolean(isCompleted);
+    task.important = parseBoolean(important);
     await task.save();
 
     res.json(task);

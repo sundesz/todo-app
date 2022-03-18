@@ -5,6 +5,7 @@ export interface ITaskAttribute {
   taskId: string;
   content: string;
   isCompleted?: boolean;
+  important?: boolean;
   userId?: string;
   createdAt?: Date;
   updatedAt?: Date;
@@ -20,6 +21,7 @@ class Task extends Model<ITaskAttribute, ITaskInput> implements ITaskAttribute {
   public taskId!: string;
   public content!: string;
   public isCompleted!: boolean;
+  public important!: boolean;
   public userId!: string;
 
   public readonly createdAt!: Date;
@@ -38,6 +40,10 @@ Task.init(
       allowNull: false,
     },
     isCompleted: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    important: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },

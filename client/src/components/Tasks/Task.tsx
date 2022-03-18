@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/Row';
 import { XCircleFill } from 'react-bootstrap-icons';
 import { ITask } from '../../types';
 import { useDispatch } from 'react-redux';
-import { deleteTask, updateTaskIsCompleted } from '../../state/action-creators';
+import { deleteTask, updateTask } from '../../state/action-creators';
 
 interface ITaskComponent {
   task: ITask;
@@ -19,9 +19,20 @@ const Task: React.FC<ITaskComponent> = ({ task }): JSX.Element => {
     e: React.ChangeEvent<HTMLInputElement>,
     taskId: string
   ) => {
-    const body = { isCompleted: !checkboxValue };
+    const body = {
+      isCompleted: !checkboxValue,
+      important: !checkboxValue ? false : task.important,
+    };
     setCheckboxValue((value) => !value);
-    dispatch(updateTaskIsCompleted(taskId, body));
+    dispatch(updateTask(taskId, body));
+  };
+
+  // Only Incomplete tasks can be made important
+  const changeImportantHandler = (taskId: string) => {
+    if (!checkboxValue) {
+      const body = { isCompleted: checkboxValue, important: !task.important };
+      dispatch(updateTask(taskId, body));
+    }
   };
 
   const deleteTaskHandler = (taskId: string) => {
@@ -52,8 +63,20 @@ const Task: React.FC<ITaskComponent> = ({ task }): JSX.Element => {
           <Form.Label
             htmlFor="inlineFormInput"
             className={`task-label ${
-              checkboxValue ? 'delete-text' : 'font-weight-bold'
+              checkboxValue
+                ? 'delete-text'
+                : task.important
+                ? 'task-important'
+                : 'cursor-pointer'
             }`}
+            title={
+              checkboxValue
+                ? 'Task completed'
+                : task.important
+                ? 'This is important'
+                : 'Click to mark this task as important'
+            }
+            onClick={() => changeImportantHandler(task.taskId)}
           >
             {task.content}
           </Form.Label>

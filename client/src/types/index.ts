@@ -2,6 +2,7 @@ export interface ITask {
   taskId: string;
   content: string;
   isCompleted: boolean;
+  important: boolean;
   userUserId?: string;
   createdAt?: Date;
   updatedAt?: Date;
@@ -10,6 +11,7 @@ export interface ITask {
 export interface INewTask {
   content: string;
   isCompleted: boolean;
+  important: boolean;
 }
 
 export interface IUser {
@@ -32,4 +34,4 @@ export interface INewUserValues {
   confirmPassword: string;
 }
 
-export type FilterType = 'all' | 'complete' | 'incomplete';
+export type FilterType = 'all' | 'complete' | 'incomplete' | 'important';

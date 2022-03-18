@@ -101,6 +101,20 @@ describe('Todo App', function () {
           });
         });
 
+        it('task can be marked important', function () {
+          cy.get('.task-label').eq(2).click();
+
+          cy.get('#all').click();
+          cy.get('.task-detail').should(($taskDetail) => {
+            expect($taskDetail).to.have.length(3);
+          });
+
+          cy.get('#important').click();
+          cy.get('.task-detail').should(($taskDetail) => {
+            expect($taskDetail).to.have.length(1);
+          });
+        });
+
         it('task can be deleted', function () {
           cy.get('.task-delete').first().click();
 

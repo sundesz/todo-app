@@ -4,7 +4,6 @@ import { INewTask } from '../types';
 export const headerRequest = () => {
   return {
     withCredentials: true,
-    // headers: { Authorization: `Bearer ${token}` },
   };
 };
 
@@ -13,15 +12,11 @@ export const createTask = async (task: INewTask) => {
   return response.data;
 };
 
-export const updateTaskIsCompleted = async (
+export const updateTask = async (
   taskId: string,
-  isCompleted: { isCompleted: boolean }
+  body: { isCompleted: boolean; important: boolean }
 ) => {
-  const response = await axios.put(
-    `tasks/${taskId}`,
-    isCompleted,
-    headerRequest()
-  );
+  const response = await axios.put(`tasks/${taskId}`, body, headerRequest());
   return response.data;
 };
 

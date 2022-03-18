@@ -22,16 +22,13 @@ export const createTask = (task: INewTask) => {
   };
 };
 
-export const updateTaskIsCompleted = (
+export const updateTask = (
   taskId: string,
-  isCompleted: { isCompleted: boolean }
+  body: { isCompleted: boolean; important: boolean }
 ) => {
   return async (dispatch: Dispatch<TaskAndNotificationAction>) => {
     try {
-      const response: ITask = await Service.updateTaskIsCompleted(
-        taskId,
-        isCompleted
-      );
+      const response: ITask = await Service.updateTask(taskId, body);
 
       dispatch({ type: TaskActionType.UPDATE_TASK, payload: response });
       displayNotification(dispatch, {

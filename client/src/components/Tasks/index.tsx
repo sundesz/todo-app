@@ -14,7 +14,6 @@ const Tasks = () => {
   const user = useSelector((state: AppState) => state.user);
   const tasks = useSelector((state: AppState) => state.task.tasks);
 
-  // const taskInputRef = React.useRef<HTMLInputElement>(null);
   const [filter, setFilter] = React.useState<FilterType>('all');
 
   // document.title = 'Todo App Tasks';
@@ -23,12 +22,10 @@ const Tasks = () => {
     values: { task: string },
     actions: FormikHelpers<{ task: string }>
   ) => {
-    dispatch(createTask({ content: values.task, isCompleted: false }));
+    dispatch(
+      createTask({ content: values.task, isCompleted: false, important: false })
+    );
     actions.resetForm();
-
-    // if (taskInputRef && taskInputRef.current) {
-    //   taskInputRef.current.focus();
-    // }
   };
 
   const headerActionsHandler = (value: FilterType) => {
@@ -50,6 +47,9 @@ const Tasks = () => {
       break;
     case 'incomplete':
       taskNode = tasks.filter((task) => !task.isCompleted);
+      break;
+    case 'important':
+      taskNode = tasks.filter((task) => !task.isCompleted && task.important);
   }
 
   return (
@@ -74,7 +74,6 @@ const Tasks = () => {
       <br />
 
       <div className="add-task-container">
-        {/* <TaskForm onSubmit={taskSubmitHandler} taskInputRef={taskInputRef} /> */}
         <TaskForm onSubmit={taskSubmitHandler} />
       </div>
     </>

@@ -1,5 +1,13 @@
 # **Todo App**
 
+User can **Sign up**, **Sign in**, **Sign out**<br>
+Logged user can **create, marked as important and done, delete** task<br>
+Sort tasks
+
+**NodeJS, Express, React, Redux, Typescript, Postgresql, Docker, Unit testing(JEST) and End to End testing(Cypress)**
+<br>
+<br>
+
 # Client
 
 ## Scripts
@@ -8,8 +16,6 @@
 **npm run test:e2e**: To start test<br>
 (please start the server in test-mode using npm run start:test first )
 
-<br>
-<br>
 <br>
 
 # Server
@@ -33,7 +39,7 @@
 
 <br>
 <br>
-<br>
 
 # For test
+
 ## Please create a table **todoapptest** first. Before you start the test.

@@ -9,7 +9,6 @@ interface TaskForm {
     values: { task: string },
     actions: FormikHelpers<{ task: string }>
   ) => void;
-  // taskInputRef: React.RefObject<HTMLInputElement>;
 }
 
 const TaskForm: React.FC<TaskForm> = ({ onSubmit }) => {
@@ -20,6 +19,7 @@ const TaskForm: React.FC<TaskForm> = ({ onSubmit }) => {
   const VALIDATION_SCHEMA = Yup.object().shape({
     task: Yup.string()
       .min(3, 'Task should be at least 3 character long')
+      .max(25, 'Task should not be more than 25 characters long')
       .required('Task required'),
   });
 
@@ -38,7 +38,6 @@ const TaskForm: React.FC<TaskForm> = ({ onSubmit }) => {
                   id="task"
                   name="task"
                   placeholder="Task description ..."
-                  // ref={taskInputRef}
                   component={CustomTextField}
                 />
               </Col>
