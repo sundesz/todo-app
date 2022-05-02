@@ -1,5 +1,5 @@
 import React from 'react';
-import { Trash, Pencil } from 'react-bootstrap-icons';
+import { Trash } from 'react-bootstrap-icons';
 import { ITask } from '../../types';
 import { useDispatch } from 'react-redux';
 import { deleteTask, updateTask } from '../../state/action-creators';

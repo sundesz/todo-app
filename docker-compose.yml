@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres
+    ports:
+      - 5432:5432
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: todoapp
+    volumes:
+      - ./server/pgdata:/var/lib/postgresql/data
+    container_name: sandesh-postgres
+
+  # postgres-test:
+  #   image: postgres
+  #   expose:
+  #     - 5433
+  #   ports:
+  #     - 5433:5433
+  #   restart: always
+  #   environment:
+  #     POSTGRES_USER: root
+  #     POSTGRES_PASSWORD: admin
+  #     POSTGRES_DB: todoapp-test
+  #   container_name: sandesh-postgres-test
+
+  server:
+    image: sandesh-todo-backend
+    build: ./server
+    ports:
+      - 3001:3001
+    environment:
+      # - DB_NAME_PRODUCTION=todoapp
+      # - DB_USER_PRODUCTION=root
+      # - DB_PASSWORD_PRODUCTION=admin
+      # - DB_HOST_PRODUCTION=sandesh-postgres
+      - DATABASE_URL_PRODUCTION=postgres://root:admin@sandesh-postgres:5432/todoapp
+
+      # - DB_NAME_TEST=todoapp-test
+      # - DB_USER_TEST=root
+      # - DB_PASSWORD_TEST=admin
+      # - DB_HOST_TEST=sandesh-postgres
+      # - DATABASE_URL_TEST=postgres://root:admin@sandesh-postgres-test:5433/todoapp-test
+
+      # - DB_DRIVER=postgres
+      - PORT=3001
+      - SECRET_KEY=ZWiIyT4zHeAfpUoj7us5QNWR+UwankdgYHeH+HXoRx98SuLPsTF+nb7Sf5ikdpOo9lBCQ3RG5kIMUm3o/pNHhQ==
+      - SALT=12
+    container_name: sandesh-todo-server
+    depends_on:
+      - postgres
+
+  client:
+    image: sandesh-todo-front
+    build: ./client
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost:8080/api/
+    ports:
+      - 3000:3000
+    container_name: sandesh-todo-client
+    depends_on:
+      - server
+
+  nginx:
+    image: nginx:1.20.1
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - 8080:80
+    container_name: sandesh-todo-reverse-proxy
+    depends_on:
+      - client
+
+volumes:
+  pgdata:

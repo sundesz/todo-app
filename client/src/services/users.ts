@@ -1,12 +1,10 @@
 import { headerRequest } from '.';
 import axios from '../axios';
+import { BASE_URL } from '../config';
 import { INewUserValues, ISignInValues } from '../types';
 
-/**
- * Cannot save token in cookies as every time browser refresh token disappears so need to use localStorage
- */
-
 export const createUser = async (newUser: INewUserValues) => {
+  console.log(BASE_URL);
   const response = await axios.post('users', newUser);
   return response.data;
 };

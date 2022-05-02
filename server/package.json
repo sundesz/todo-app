@@ -4,15 +4,12 @@
   "description": "todo app",
   "main": "index.js",
   "scripts": {
-    "tsc": "tsc",
+    "build": "tsc",
+    "start": "node build/src/index.js",
     "start:test": "NODE_ENV=test ts-node-dev src/index.ts",
-    "start:postgres": "docker-compose down && docker-compose up -d --build",
-    "dev": "npm run start:postgres && npm run dev:nodb",
-    "dev:nodb": "NODE_ENV=development ts-node-dev src/index.ts",
-    "build:ui": "rm -rf build && cd ../client/ && npm run build && cp -ar build ../server/",
-    "build:both": "npm run build:ui && npm run tsc",
+    "dev": "ts-node-dev src/index.ts",
     "lint": "eslint --ext .ts .",
-    "test": "npm run start:postgres && NODE_ENV=test jest --verbose --runInBand"
+    "test": "jest --verbose --runInBand"
   },
   "author": "Sandesh Hyoju",
   "license": "ISC",

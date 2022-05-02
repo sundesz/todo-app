@@ -37,7 +37,6 @@ app.use(
 );
 
 app.use(express.json());
-app.use(express.static('build'));
 app.use(cookieParser());
 
 app.get('/', (_req: Request, res: Response) => {

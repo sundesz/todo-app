@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  sandesh-todo-postgres-dev:
+    image: postgres
+    ports:
+      - 5432:5432
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: todoapp-dev
+    volumes:
+      - ./pgdata-dev:/var/lib/postgresql/data-dev
+    container_name: sandesh-postgres-dev
+
+  server:
+    image: sandesh-todo-backend-dev
+    build:
+      context: .
+      dockerfile: dev.Dockerfile
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - 3001:3001
+    environment:
+      - DATABASE_URL_DEVELOPMENT=postgres://root:admin@sandesh-postgres-dev:5432/todoapp-dev
+      - PORT=3001
+      - SECRET_KEY=ZWiIyT4zHeAfpUoj7us5QNWR+UwankdgYHeH+HXoRx98SuLPsTF+nb7Sf5ikdpOo9lBCQ3RG5kIMUm3o/pNHhQ==
+      - SALT=12
+    container_name: sandesh-todo-server-dev
+
+  debug-helper:
+    image: busybox
+
+volumes:
+  pgdata-dev:

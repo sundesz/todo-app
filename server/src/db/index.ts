@@ -1,19 +1,21 @@
 import { Sequelize } from 'sequelize';
-import { DB_HOST, DB_NAME, DB_PASSWORD, DB_USER } from '../config';
+import { DATABASE_URL } from '../config';
+// import { DB_HOST, DB_NAME, DB_PASSWORD, DB_USER } from '../config';
 import { Umzug, SequelizeStorage } from 'umzug';
 
-export const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
-  host: DB_HOST,
-  dialect: 'postgres',
-  dialectOptions: {
-    // ssl: {
-    //   require: true,
-    //   rejectUnauthorized: false,
-    // },
-  },
-  // disable logging; default: console.log
-  logging: false,
-});
+export const sequelize = new Sequelize(DATABASE_URL);
+// export const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
+//   host: DB_HOST,
+//   dialect: 'postgres',
+//   dialectOptions: {
+//     // ssl: {
+//     //   require: true,
+//     //   rejectUnauthorized: false,
+//     // },
+//   },
+//   // disable logging; default: console.log
+//   logging: false,
+// });
 
 const migrationConf = {
   migrations: { glob: 'src/db/migrations/*.ts' },
