@@ -1,10 +1,19 @@
 # **Todo App**
 
 User can **Sign up**, **Sign in**, **Sign out**<br>
-Logged user can **create, marked as important and done, delete** task<br>
-Sort tasks
+Logged in user can **Create, marked as important and done, delete and sort tasks by filters**<br>
+Logged in information are stored in cookies
 
 **NodeJS, Express, React, Redux, Typescript, Postgresql, Docker, Unit testing(JEST) and End to End testing(Cypress)**
+<br>
+<br>
+
+# **After cloning**
+
+run **npm install** on both server and client
+<br>
+create **.env file** on both server and client using .env.template
+
 <br>
 <br>
 
@@ -22,7 +31,7 @@ Sort tasks
 
 ## scripts
 
-**NOTE** Please create a .env file using .env.template
+**NOTE:** run **docker-compose up --build** command, if you want to use docker postgres
 <br>
 <br>
 **npm run dev**: To start server<br>
@@ -31,4 +40,7 @@ Sort tasks
 
 ## Info
 
-You can use docker to build image and run the app from port 8080
+1. To test you need to **create database todoapptest manually** if you use docker postgres
+2. You can use docker to run the application. <br>
+   Just use the command **docker-compose up --build** from main directory and Use this link to open the app
+   [http://localhost:8080](http://localhost:8080)
