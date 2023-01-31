@@ -6,13 +6,8 @@ services:
     ports:
       - 5432:5432
     restart: always
-    container_name: todo-postgres-dev
+    container_name: todo-postgres-test
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: admin
-      POSTGRES_DB: todoapp-dev
-    volumes:
-      - pgdata-dev:/var/lib/postgresql/data
-
-volumes:
-  pgdata-dev:
+      POSTGRES_DB: todoapp-test
