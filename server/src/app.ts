@@ -1,8 +1,8 @@
 import express, { Application, Request, Response } from 'express';
 import cors from 'cors';
-import userRouter from './api/routers/user';
-import taskRouter from './api/routers/task';
-import loginRouter from './api/routers/login';
+import userRouter from './api/routers/userRouter';
+import taskRouter from './api/routers/taskRouter';
+import authRouter from './api/routers/authRouter';
 import {
   errorHandler,
   isValidUser,
@@ -11,7 +11,7 @@ import {
 } from './middleware';
 import { JwtPayload } from 'jsonwebtoken';
 import { ITaskAttribute } from './db/models';
-import testingRouter from './api/routers/testing';
+import testRouter from './api/routers/testRouter';
 import cookieParser from 'cookie-parser';
 
 /**
@@ -49,10 +49,10 @@ app.get('/ping', (_req: Request, res: Response) => {
 
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/tasks', tokenExtractor, isValidUser, taskRouter);
-app.use('/api/v1/', loginRouter);
+app.use('/api/v1/', authRouter);
 
 if (process.env.NODE_ENV === 'test') {
-  app.use('/api/v1/testing', testingRouter);
+  app.use('/api/v1/test', testRouter);
 }
 
 app.use(unknownEndpoint);

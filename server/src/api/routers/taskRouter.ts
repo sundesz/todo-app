@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { taskFinder } from '../../middleware/helper';
-import taskController from '../controllers/tasks';
+import taskController from '../controllers/taskController';
 
 const taskRouter = Router();
 

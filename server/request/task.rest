@@ -29,4 +29,4 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiU2FuZGVza
 
 
 ###
-POST http://localhost:3001/api/v1/testing/reset
+POST http://localhost:3001/api/v1/test/reset

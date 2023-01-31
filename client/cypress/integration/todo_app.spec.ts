@@ -2,7 +2,7 @@
 
 describe('Todo App', function () {
   beforeEach(function () {
-    cy.request('POST', 'http://localhost:3001/api/v1/testing/reset');
+    cy.request('POST', 'http://localhost:3001/api/v1/test/reset');
     cy.visit('http://localhost:3000');
   });
 
