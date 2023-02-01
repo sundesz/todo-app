@@ -1,13 +1,12 @@
 import { NextFunction, RequestHandler } from 'express';
 import { Op } from 'sequelize';
-import { Task, User } from '../../db/models';
+import { Task } from '../../db/models';
 import { parseBoolean } from '../../utils';
-
 /**
  * Get all tasks by userId
  */
 const getAllTasks: RequestHandler = async (req, res, next: NextFunction) => {
-  const { id: userId } = req.decodedToken as { id: string };
+  const { userId } = req.decodedToken as { userId: string };
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let isCompleted: any = {
@@ -40,13 +39,14 @@ const getAllTasks: RequestHandler = async (req, res, next: NextFunction) => {
 const createTask: RequestHandler = async (req, res, next: NextFunction) => {
   try {
     const { content } = req.body as { content: string };
-    const { id } = req.decodedToken as { id: string };
-    const user = await User.findByPk(id);
-    if (!user) {
-      throw new Error('Invalid Token. Please login again.');
-    }
+    const { userId } = req.decodedToken as { userId: string };
 
-    const task = await Task.create({ content, userId: user.userId });
+    const task = await Task.create({
+      content,
+      userId,
+      isCompleted: false,
+      important: false,
+    });
 
     res.json(task);
   } catch (error: unknown) {
@@ -81,9 +81,9 @@ const updateTask: RequestHandler = async (req, res, next: NextFunction) => {
 const deleteTask: RequestHandler = async (req, res, next: NextFunction) => {
   try {
     const task = req.task as Task;
-    void (await task.destroy());
+    await task.destroy();
 
-    res.status(204).end();
+    res.sendStatus(204);
   } catch (error) {
     next(error);
   }

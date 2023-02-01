@@ -3,6 +3,7 @@ import { NextFunction, RequestHandler } from 'express';
 import bcrypt from 'bcrypt';
 import { SALT } from '../../config';
 import { User } from '../../db/models';
+import { NewUserInputType } from '../../types';
 
 /**
  * Create user
@@ -10,11 +11,7 @@ import { User } from '../../db/models';
 
 const createUser: RequestHandler = async (req, res, next: NextFunction) => {
   try {
-    const { name, username, password } = req.body as {
-      name: string;
-      username: string;
-      password: string;
-    };
+    const { name, username, password } = req.body as NewUserInputType;
 
     const passwordHash = await bcrypt.hash(password, Number(SALT));
 
@@ -22,9 +19,12 @@ const createUser: RequestHandler = async (req, res, next: NextFunction) => {
       username,
       name,
       passwordHash,
+      isActive: true,
+      role: 'user',
     });
 
     res.json(user);
+    // res.status(201).json({ message: 'User created' });
   } catch (error: unknown) {
     next(error);
   }
