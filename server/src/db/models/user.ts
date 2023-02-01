@@ -1,13 +1,16 @@
 import { DataTypes, Model } from 'sequelize';
+import { UserRole } from '../../types';
 import { sequelize } from '../index';
 import Task from './task';
 
 // defines all the possible attributes of our model
-interface IUserAttributes {
+export interface IUserAttributes {
   userId: string;
   username: string;
   name: string;
   passwordHash: string;
+  isActive: boolean;
+  role: UserRole;
   createdAt?: Date;
   updateAt?: Date;
   tasks?: Task[];
@@ -24,6 +27,8 @@ class User
   public username!: string;
   public name!: string;
   public passwordHash!: string;
+  public isActive!: boolean;
+  public role!: UserRole;
   public tasks!: [];
 
   public readonly createdAt!: Date;
@@ -52,6 +57,14 @@ User.init(
     passwordHash: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    isActive: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
+    role: {
+      type: DataTypes.STRING,
+      defaultValue: 'user',
     },
   },
   {
