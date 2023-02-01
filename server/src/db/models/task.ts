@@ -4,8 +4,8 @@ import { sequelize } from '../index';
 export interface ITaskAttribute {
   taskId: string;
   content: string;
-  isCompleted?: boolean;
-  important?: boolean;
+  isCompleted: boolean;
+  important: boolean;
   userId?: string;
   createdAt?: Date;
   updatedAt?: Date;
@@ -13,9 +13,6 @@ export interface ITaskAttribute {
 
 // defines the type of the object passed to Sequelize’s model.create
 export type ITaskInput = Omit<ITaskAttribute, 'taskId'>;
-
-// defines the returned object from model.create, model.update, and model.findOne
-export type ITaskOutput = Omit<ITaskAttribute, 'userId'>;
 
 class Task extends Model<ITaskAttribute, ITaskInput> implements ITaskAttribute {
   public taskId!: string;

@@ -29,19 +29,35 @@ switch (process.env.NODE_ENV) {
 const DB_DRIVER = process.env.DB_DRIVER;
 
 const PORT = process.env.PORT || 3001;
-const SECRET_KEY = process.env.SECRET_KEY as string;
 const SALT = process.env.SALT as string;
+
+const COOKIE_NAME_FOR_REFRESH_TOKEN = 'refresh_token';
+
+const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET as string;
+const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET as string;
 const COOKIE_EXPIRE_TIME = (process.env.COOKIE_EXPIRE_TIME ||
   2 * 60 * 60) as number; // 2hours
 
+//REFRESH_TOKEN_SECRET = long time (hours / days)
+const REFRESH_TOKEN_EXPIRE_TIME = (process.env.REFRESH_TOKEN_EXPIRE_TIME ||
+  24 * 60 * 60) as number; // 1 day
+
+//ACCESS_TOKEN_SECRET = short time (15min / 1 hour)
+const ACCESS_TOKEN_EXPIRE_TIME = (process.env.ACCESS_TOKEN_EXPIRE_TIME ||
+  15 * 60) as number; // 15 min
+
 export {
   PORT,
-  SECRET_KEY,
-  SALT,
+  REFRESH_TOKEN_SECRET,
+  REFRESH_TOKEN_EXPIRE_TIME,
+  ACCESS_TOKEN_SECRET,
+  ACCESS_TOKEN_EXPIRE_TIME,
   COOKIE_EXPIRE_TIME,
+  SALT,
   DB_USER,
   DB_PASSWORD,
   DB_HOST,
   DB_DRIVER,
   DB_NAME,
+  COOKIE_NAME_FOR_REFRESH_TOKEN,
 };

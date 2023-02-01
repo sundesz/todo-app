@@ -1,7 +1,11 @@
-import { Sequelize } from 'sequelize';
+import { ConnectionError, Sequelize } from 'sequelize';
 import { DB_HOST, DB_NAME, DB_PASSWORD, DB_USER } from '../config';
 import { Umzug, SequelizeStorage } from 'umzug';
+import { logErrorMessage } from '../utils/loggers';
 
+/**
+ *
+ */
 export const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   host: DB_HOST,
   dialect: 'postgres',
@@ -23,24 +27,40 @@ const migrationConf = {
 
 const umzug = new Umzug(migrationConf);
 
+/**
+ *
+ */
 const runMigrations = async () => {
-  const migrator = umzug;
-  const migrations = await migrator.up();
-  console.log('Migrations up to date', {
-    files: migrations.map((file) => file.name),
-  });
+  try {
+    const migrator = umzug;
+    const migrations = await migrator.up();
+    console.log('Migrations up to date', {
+      files: migrations.map((file) => file.name),
+    });
+  } catch (error: unknown) {
+    logErrorMessage(error);
+    console.log('failed to migrate: ', error);
+  }
 };
 
+/**
+ *
+ */
 export const rollbackMigrations = async () => {
   try {
     await sequelize.authenticate();
     const migrator = umzug;
     await migrator.down();
-  } catch (error) {
+  } catch (error: unknown) {
+    logErrorMessage(error);
     console.log('failed to rollback: ', error);
   }
 };
 
+/**
+ *
+ * @returns
+ */
 export const connectToDatabase = async () => {
   try {
     await sequelize.authenticate();
@@ -48,6 +68,10 @@ export const connectToDatabase = async () => {
 
     console.log('Database connected');
   } catch (error) {
+    error instanceof ConnectionError
+      ? logErrorMessage(error.message)
+      : logErrorMessage(error);
+
     console.log('Connecting to database failed: ', error);
     return process.exit(1);
   }
