@@ -6,7 +6,7 @@ services:
     ports:
       - 5432:5432
     restart: always
-    container_name: todo-postgres-dev
+    container_name: pg-todo-dev
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: admin
