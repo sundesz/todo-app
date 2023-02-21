@@ -4,7 +4,7 @@ export const attributesForInput = (input: HTMLInputElement) => ({
   placeholder: input.placeholder,
   value: input.value,
   onChange: input.onchange,
-});
+})
 
 export const capitalize = (text: string) =>
-  `${text.charAt(0).toUpperCase()}${text.substring(1)}`;
+  `${text.charAt(0).toUpperCase()}${text.substring(1)}`

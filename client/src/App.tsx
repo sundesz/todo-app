@@ -1,48 +1,44 @@
-import React from 'react';
-import Container from 'react-bootstrap/Container';
-import { useDispatch } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
-import Footer from './components/Footer';
-import Home from './components/Home';
-import Navigation from './components/Navigation';
-import Notification from './components/Notification';
-import SignIn from './components/SignIn';
-import SignOut from './components/SignOut';
-import SignUp from './components/SignUp';
-import Tasks from './components/Tasks';
-import { refetchToken } from './state/action-creators';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import Layout from './components/Layout';
+import Page404 from './components/Layout/Page404';
+import Home from './components/Layout/Home';
+import Login from './feature/auth/Login/Login';
+import SignUp from './feature/SignUp';
+import Logout from './feature/auth/Logout';
+import RequireAuth from './feature/auth/RequireAuth';
+import TaskList from './feature/Tasks/TaskList';
+import RequireNoAuth from './feature/auth/RequireNoAuth';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
-  const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    dispatch(refetchToken());
-  }, []);
-
   return (
-    <Container>
-      <Navigation />
-      <Notification />
-      <Switch>
-        <Route path="/signin">
-          <SignIn />
+    <Router>
+      <ToastContainer
+        position="top-center"
+        autoClose={1000}
+        style={{ width: '600px' }}
+      />
+
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+
+          <Route element={<RequireNoAuth />}>
+            <Route path="/signin" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+          </Route>
+
+          {/* protected routes */}
+          <Route element={<RequireAuth />}>
+            <Route path="/signout" element={<Logout />} />
+            <Route path="/tasks" element={<TaskList />} />
+          </Route>
+
+          <Route path="*" element={<Page404 />} />
         </Route>
-        <Route path="/signup">
-          <SignUp />
-        </Route>
-        <Route path="/signout">
-          <SignOut />
-        </Route>
-        <Route path="/tasks">
-          <Tasks />
-        </Route>
-        <Route path="/">
-          <Home />
-        </Route>
-      </Switch>
-      <Footer />
-    </Container>
+      </Routes>
+    </Router>
   );
 };
 
