@@ -35,6 +35,7 @@ Task.init(
     content: {
       type: DataTypes.TEXT,
       allowNull: false,
+      unique: true,
     },
     isCompleted: {
       type: DataTypes.BOOLEAN,
