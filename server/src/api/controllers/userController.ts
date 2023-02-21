@@ -11,7 +11,13 @@ import { NewUserInputType } from '../../types';
 
 const createUser: RequestHandler = async (req, res, next: NextFunction) => {
   try {
-    const { name, username, password } = req.body as NewUserInputType;
+    // const newUser: NewUserInputType = {
+    //   name: req.body.name,
+    //   username: req.body.username,
+    //   password: req.body.password,
+    // };
+
+    const { name, username, password } = req.body.name as NewUserInputType;
 
     const passwordHash = await bcrypt.hash(password, Number(SALT));
 

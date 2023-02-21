@@ -21,17 +21,17 @@ const handleLogin: RequestHandler = async (req, res, next: NextFunction) => {
     const { username, password } = req.body as CredentialType;
 
     if (!username || !password) {
-      return res.status(400).json({ error: errMessage.REQUIRED_USER_PASS });
+      return res.status(400).json(errMessage.REQUIRED_USER_PASS);
     }
 
     const user = await getUser(username);
     if (!user) {
-      return res.sendStatus(401);
+      return res.status(401).json(errMessage.INVALID_USER_PASS);
     }
 
     const passwordCorrect = await bcrypt.compare(password, user.passwordHash);
     if (!passwordCorrect) {
-      return res.sendStatus(401);
+      return res.status(401).json(errMessage.INVALID_USER_PASS);
     }
 
     const refreshToken = generateRefreshToken(user);
@@ -50,10 +50,12 @@ const handleLogin: RequestHandler = async (req, res, next: NextFunction) => {
       )
       .status(200)
       .json({
-        name: user.name,
-        username: user.username,
-        tasks: user.tasks,
-        token: accessToken,
+        userInfo: {
+          userId: user.userId,
+          name: user.name,
+          username: user.username,
+        },
+        accessToken,
       });
   } catch (error: unknown) {
     next(error);
@@ -69,10 +71,10 @@ const handleLogout: RequestHandler = (_req, res) => {
     httpOnly: true,
     secure: true,
     sameSite: 'strict',
-    maxAge: COOKIE_EXPIRE_TIME,
+    maxAge: 0,
     path: '/',
   });
-  res.sendStatus(204);
+  res.status(204).end();
 };
 
 export default {

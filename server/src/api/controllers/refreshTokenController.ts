@@ -21,7 +21,7 @@ const handleRefreshToken: RequestHandler = async (
     const cookies = cookie.parse(req.headers.cookie || '');
 
     if (!cookies?.refresh_token) {
-      return res.sendStatus(401);
+      return res.status(200).end();
     }
 
     const refreshToken = cookies.refresh_token;
@@ -36,10 +36,12 @@ const handleRefreshToken: RequestHandler = async (
     if (foundUser) {
       const accessToken = generateAccessToken(foundUser);
       res.json({
-        name: foundUser.name,
-        username: foundUser.username,
-        tasks: foundUser.tasks,
-        token: accessToken,
+        userInfo: {
+          userId: foundUser.userId,
+          name: foundUser.name,
+          username: foundUser.username,
+        },
+        accessToken,
       });
     }
   } catch (error) {

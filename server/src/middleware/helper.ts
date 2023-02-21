@@ -20,7 +20,7 @@ export const verifyAccessToken: RequestHandler = async (
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader?.toLowerCase().startsWith('bearer')) {
-      return res.sendStatus(401);
+      return res.status(401).end();
     }
 
     const token = authHeader.substring(7);
@@ -32,7 +32,7 @@ export const verifyAccessToken: RequestHandler = async (
     const foundUser = await getUser(decodedToken.userInfo.username);
 
     if (!foundUser) {
-      return res.sendStatus(401);
+      return res.status(401).end();
     }
 
     req.decodedToken = {
@@ -55,7 +55,7 @@ export const taskFinder: RequestHandler = async (req, res, next) => {
     const task = await Task.findByPk(taskId);
 
     if (!task) {
-      return res.sendStatus(404);
+      return res.status(404).end();
     }
 
     req.task = task;
@@ -72,11 +72,11 @@ export const getUser = async (username: string) => {
   return await User.findOne({
     where: { username, isActive: true },
     attributes: ['userId', 'name', 'username', 'passwordHash', 'role'],
-    include: {
-      model: Task,
-      attributes: ['taskId', 'content', 'isCompleted', 'important'],
-    },
-    order: [[Task, 'createdAt', 'asc']],
+    // include: {
+    //   model: Task,
+    //   attributes: ['taskId', 'content', 'isCompleted', 'important'],
+    // },
+    // order: [[Task, 'createdAt', 'asc']],
   });
 };
 

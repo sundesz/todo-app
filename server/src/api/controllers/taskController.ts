@@ -1,7 +1,7 @@
 import { NextFunction, RequestHandler } from 'express';
 import { Op } from 'sequelize';
 import { Task } from '../../db/models';
-import { parseBoolean } from '../../utils';
+
 /**
  * Get all tasks by userId
  */
@@ -20,13 +20,14 @@ const getAllTasks: RequestHandler = async (req, res, next: NextFunction) => {
 
   try {
     const tasks = await Task.findAll({
-      attributes: { exclude: ['userId'] },
+      attributes: { exclude: ['user_id'] },
       where: {
         userId: userId,
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         isCompleted,
       },
     });
+
     res.json(tasks);
   } catch (error: unknown) {
     next(error);
@@ -50,6 +51,7 @@ const createTask: RequestHandler = async (req, res, next: NextFunction) => {
 
     res.json(task);
   } catch (error: unknown) {
+    console.log(error);
     next(error);
   }
 };
@@ -60,13 +62,15 @@ const createTask: RequestHandler = async (req, res, next: NextFunction) => {
 const updateTask: RequestHandler = async (req, res, next: NextFunction) => {
   try {
     const task = req.task as Task;
-    const { isCompleted, important } = req.body as {
-      isCompleted: string;
-      important: string;
+    const { isCompleted, important, content } = req.body as {
+      content: string;
+      isCompleted: boolean;
+      important: boolean;
     };
 
-    task.isCompleted = parseBoolean(isCompleted);
-    task.important = parseBoolean(important);
+    task.content = content ?? task.content;
+    task.isCompleted = isCompleted ?? task.isCompleted;
+    task.important = important ?? task.important;
     await task.save();
 
     res.json(task);
@@ -83,7 +87,7 @@ const deleteTask: RequestHandler = async (req, res, next: NextFunction) => {
     const task = req.task as Task;
     await task.destroy();
 
-    res.sendStatus(204);
+    res.status(204).end();
   } catch (error) {
     next(error);
   }
