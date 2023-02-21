@@ -11,3 +11,8 @@ services:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: todoapp-test
+    volumes:
+      - todo-pgdata-test:/var/lib/postgresql/data
+
+volumes:
+  todo-pgdata-test:

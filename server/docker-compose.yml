@@ -12,7 +12,7 @@ services:
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: todoapp
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - todo-pgdata:/var/lib/postgresql/data
 
 volumes:
-  pgdata:
+  todo-pgdata:
